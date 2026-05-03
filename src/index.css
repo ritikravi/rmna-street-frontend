@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+  body { @apply font-sans text-zinc-900 bg-white antialiased; }
+  h1, h2, h3 { @apply font-display; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-zinc-900 text-white px-6 py-3 text-sm font-medium tracking-wider uppercase hover:bg-zinc-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-outline {
+    @apply border border-zinc-900 text-zinc-900 px-6 py-3 text-sm font-medium tracking-wider uppercase hover:bg-zinc-900 hover:text-white transition-colors duration-200;
+  }
+  .input-field {
+    @apply w-full border border-zinc-300 px-4 py-3 text-sm focus:outline-none focus:border-zinc-900 transition-colors;
+  }
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 text-xs font-medium;
+  }
+}
+
+/* Swiper overrides */
+.swiper-pagination-bullet-active { background: #BB0000 !important; }
+.swiper-button-next, .swiper-button-prev { color: #BB0000 !important; }

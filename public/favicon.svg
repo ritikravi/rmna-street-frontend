@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#000000"/>
+  <!-- R icon mark -->
+  <path d="M6 6H6V26H11V18H16L20 26H25L20 17C22.5 15.8 24 13.2 24 10C24 7 21.5 6 18 6H6ZM11 10H17C19 10 20 11 20 12.5C20 14 19 15.5 17 15.5H11V10Z" fill="#FFFFFF"/>
+  <!-- Red accent -->
+  <path d="M20 15.5L24 15.5L22 19Z" fill="#BB0000"/>
+</svg>
