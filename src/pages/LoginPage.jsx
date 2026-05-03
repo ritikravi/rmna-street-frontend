@@ -95,9 +95,13 @@ export default function LoginPage() {
     if (otpString.length < 6) { toast.error('Enter the 6-digit OTP'); return; }
     setOtpLoading(true);
     try {
-      await api.post('/auth/verify-otp', { email: form.email, otp: otpString });
-      // Complete login — move pending token to active
-      dispatch(completeLogin());
+      const res = await api.post('/auth/verify-otp', { email: form.email, otp: otpString });
+      // Save token and user from verify response
+      if (res.data.token) {
+        localStorage.setItem('rmna_token', res.data.token);
+        localStorage.setItem('rmna_user', JSON.stringify(res.data.user));
+        dispatch(completeLogin());
+      }
       toast.success('Email verified! Welcome to RMNA Street 🎉');
       navigate(from, { replace: true });
     } catch (err) {

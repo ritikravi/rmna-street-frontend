@@ -7,7 +7,7 @@ const token = localStorage.getItem('rmna_token') || null;
 export const register = createAsyncThunk('auth/register', async (data, { rejectWithValue }) => {
   try {
     const res = await api.post('/auth/register', data);
-    // Don't save token yet — wait for OTP verification
+    // No token returned — must verify OTP first
     return { ...res.data, pendingVerification: true };
   } catch (e) {
     return rejectWithValue(e.response?.data?.message || 'Registration failed');
