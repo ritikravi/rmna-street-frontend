@@ -106,8 +106,8 @@ export default function HomePage() {
       <section className="bg-zinc-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
-            { icon: '🚚', title: 'Free Shipping', desc: 'On all orders within 48 hrs' },
-            { icon: '↩️', title: 'Easy Returns', desc: '7-day return policy' },
+            { icon: '🚚', title: 'Free Shipping', desc: 'On all orders' },
+            { icon: '⚡', title: '48hr Delivery', desc: 'Fast & reliable' },
             { icon: '🔒', title: 'Secure Payment', desc: 'COD & Online available' },
             { icon: '✨', title: 'Premium Quality', desc: 'Crafted to last' },
           ].map((item) => (
