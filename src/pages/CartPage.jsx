@@ -121,11 +121,8 @@ export default function CartPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-zinc-600">Shipping</span>
-                <span>{shipping === 0 ? 'FREE' : formatPrice(shipping)}</span>
+                <span className="text-green-600">FREE</span>
               </div>
-              {shipping > 0 && (
-                <p className="text-xs text-zinc-500">Add {formatPrice(999 - subtotal)} more for free shipping</p>
-              )}
               <div className="border-t pt-3 flex justify-between font-semibold text-base">
                 <span>Total</span>
                 <span>{formatPrice(total)}</span>

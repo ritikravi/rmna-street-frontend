@@ -36,9 +36,9 @@ export default function Footer() {
         <div>
           <h4 className="text-white text-sm font-semibold tracking-wider uppercase mb-4">Contact</h4>
           <ul className="space-y-2 text-sm">
-            <li>support@rmnastreet.com</li>
-            <li>+91 98765 43210</li>
-            <li>Mon–Sat, 10am–6pm IST</li>
+            <li>ritikravi7724@gmail.com</li>
+            <li>nirmalrathore598@gmail.com</li>
+            <li>24 hrs open</li>
           </ul>
         </div>
       </div>

@@ -106,9 +106,9 @@ export default function HomePage() {
       <section className="bg-zinc-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
-            { icon: '🚚', title: 'Free Shipping', desc: 'On orders above ₹999' },
+            { icon: '🚚', title: 'Free Shipping', desc: 'On all orders within 48 hrs' },
             { icon: '↩️', title: 'Easy Returns', desc: '7-day return policy' },
-            { icon: '🔒', title: 'Secure Payment', desc: 'COD available' },
+            { icon: '🔒', title: 'Secure Payment', desc: 'COD & Online available' },
             { icon: '✨', title: 'Premium Quality', desc: 'Crafted to last' },
           ].map((item) => (
             <div key={item.title}>

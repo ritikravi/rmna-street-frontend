@@ -40,7 +40,7 @@ export default function CheckoutPage() {
     const price = item.product?.discountPrice > 0 ? item.product.discountPrice : item.product?.price || 0;
     return acc + price * item.quantity;
   }, 0);
-  const shipping = subtotal > 999 ? 0 : 99;
+  const shipping = 0; // Free shipping on all orders
   const total = subtotal + shipping - discount;
 
   const handleChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
