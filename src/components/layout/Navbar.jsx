@@ -73,11 +73,11 @@ export default function Navbar() {
                 <button className="p-1 hover:text-accent transition-colors">
                   <FiUser size={20} />
                 </button>
-                <div className="absolute right-0 top-8 w-48 bg-white border border-zinc-200 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <div className="absolute right-0 top-8 w-48 bg-white border border-zinc-200 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
                   <Link to="/profile" className="block px-4 py-2 text-sm hover:bg-zinc-50">Profile</Link>
                   <Link to="/orders" className="block px-4 py-2 text-sm hover:bg-zinc-50">My Orders</Link>
                   <button
-                    onClick={() => dispatch(logout())}
+                    onClick={() => { dispatch(logout()); navigate('/'); }}
                     className="block w-full text-left px-4 py-2 text-sm hover:bg-zinc-50 text-red-600"
                   >
                     Logout
