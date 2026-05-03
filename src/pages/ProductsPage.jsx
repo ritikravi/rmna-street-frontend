@@ -22,10 +22,22 @@ export default function ProductsPage() {
     page: Number(searchParams.get('page')) || 1,
   });
 
+  // Sync URL params to filters when navigating from navbar links
+  useEffect(() => {
+    setFilters({
+      keyword: searchParams.get('keyword') || '',
+      fitType: searchParams.get('fitType') || '',
+      size: searchParams.get('size') || '',
+      minPrice: searchParams.get('minPrice') || '',
+      maxPrice: searchParams.get('maxPrice') || '',
+      sort: searchParams.get('sort') || 'newest',
+      page: Number(searchParams.get('page')) || 1,
+    });
+  }, [searchParams.toString()]);
+
   useEffect(() => {
     const params = Object.fromEntries(Object.entries(filters).filter(([, v]) => v));
     dispatch(fetchProducts(params));
-    setSearchParams(params);
   }, [filters, dispatch]);
 
   const handleFilterChange = (updates) => {
