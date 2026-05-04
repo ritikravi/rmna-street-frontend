@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatPrice } from '../utils/helpers';
 import api from '../utils/api';
 import toast from 'react-hot-toast';
+import { FiMapPin } from 'react-icons/fi';
 
 const loadRazorpayScript = () =>
   new Promise((resolve) => {
@@ -15,6 +16,18 @@ const loadRazorpayScript = () =>
     script.onerror = () => resolve(false);
     document.body.appendChild(script);
   });
+
+// ── NEW: Parse OpenStreetMap geocode response into address fields ──
+const parseOSMAddress = (data) => {
+  const addr = data.address || {};
+  const road = addr.road || addr.pedestrian || addr.footway || addr.street || '';
+  const suburb = addr.suburb || addr.neighbourhood || addr.quarter || '';
+  const street = [road, suburb].filter(Boolean).join(', ');
+  const city = addr.city || addr.town || addr.village || addr.county || '';
+  const state = addr.state || '';
+  const pincode = addr.postcode || '';
+  return { street, city, state, pincode };
+};
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
@@ -35,6 +48,50 @@ export default function CheckoutPage() {
   const [discount, setDiscount] = useState(0);
   const [couponApplied, setCouponApplied] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // ── NEW: Location autofill state ──
+  const [locLoading, setLocLoading] = useState(false);
+
+  // ── NEW: Fetch location and autofill address ──
+  const handleUseLocation = () => {
+    if (!navigator.geolocation) {
+      toast.error('Geolocation not supported by your browser');
+      return;
+    }
+    setLocLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const { latitude, longitude } = position.coords;
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
+            { headers: { 'Accept-Language': 'en', 'User-Agent': 'RMNAStreet/1.0' } }
+          );
+          const data = await res.json();
+          const parsed = parseOSMAddress(data);
+          // Only autofill empty fields — don't overwrite what user typed
+          setForm((prev) => ({
+            ...prev,
+            street: prev.street || parsed.street,
+            city: prev.city || parsed.city,
+            state: prev.state || parsed.state,
+            pincode: prev.pincode || parsed.pincode,
+          }));
+          toast.success('Address autofilled from your location');
+        } catch {
+          toast.error('Could not fetch address. Please enter manually.');
+        } finally {
+          setLocLoading(false);
+        }
+      },
+      (err) => {
+        setLocLoading(false);
+        if (err.code === 1) toast.error('Location permission denied. Please enter address manually.');
+        else toast.error('Could not get location. Please enter manually.');
+      },
+      { timeout: 10000 }
+    );
+  };
 
   const subtotal = items.reduce((acc, item) => {
     const price = item.product?.discountPrice > 0 ? item.product.discountPrice : item.product?.price || 0;
@@ -135,7 +192,19 @@ export default function CheckoutPage() {
         <div className="space-y-6">
           {/* Shipping */}
           <div className="border p-5">
-            <h2 className="font-semibold mb-4">Shipping Address</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-semibold">Shipping Address</h2>
+              {/* ── NEW: Location button ── */}
+              <button
+                type="button"
+                onClick={handleUseLocation}
+                disabled={locLoading}
+                className="flex items-center gap-1.5 text-xs border border-zinc-300 px-3 py-1.5 hover:border-zinc-900 transition-colors disabled:opacity-50"
+              >
+                <FiMapPin size={13} />
+                {locLoading ? 'Detecting...' : 'Use My Location'}
+              </button>
+            </div>
             <div className="space-y-3">
               <input name="fullName" value={form.fullName} onChange={handleChange} placeholder="Full Name" required className="input-field" />
               <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone Number" required className="input-field" />
