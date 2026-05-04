@@ -38,6 +38,7 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             <li>ritikravi7724@gmail.com</li>
             <li>nirmalrathore598@gmail.com</li>
+            <li>harivanshimayank@gmail.com</li>
             <li>24 hrs open</li>
           </ul>
         </div>
