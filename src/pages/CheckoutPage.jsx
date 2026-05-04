@@ -234,14 +234,14 @@ export default function CheckoutPage() {
               {/* Razorpay */}
               <label className={`flex items-center gap-3 p-3 border cursor-pointer transition-colors ${
                 paymentMethod === 'Razorpay' ? 'border-zinc-900 bg-zinc-50' : 'border-zinc-200 hover:border-zinc-400'
-              } ${!hasRazorpay ? 'opacity-50 cursor-not-allowed' : ''}`}>
+              } ${(!hasRazorpay || subtotal < 100) ? 'opacity-50 cursor-not-allowed' : ''}`}>
                 <input
                   type="radio"
                   name="payment"
                   value="Razorpay"
                   checked={paymentMethod === 'Razorpay'}
                   onChange={() => setPaymentMethod('Razorpay')}
-                  disabled={!hasRazorpay}
+                  disabled={!hasRazorpay || subtotal < 100}
                   className="accent-zinc-900"
                 />
                 <div>
@@ -250,9 +250,9 @@ export default function CheckoutPage() {
                 </div>
                 <span className="ml-auto text-xl">💳</span>
               </label>
-              {!hasRazorpay && (
+              {subtotal < 100 && hasRazorpay && (
                 <p className="text-xs text-zinc-400 px-1">
-                  Online payment coming soon. Use COD for now.
+                  Minimum ₹100 required for online payment. Use COD.
                 </p>
               )}
             </div>
