@@ -48,9 +48,18 @@ const authSlice = createSlice({
       localStorage.removeItem('rmna_token');
     },
     clearError(state) { state.error = null; },
-    // Called after OTP verified — complete the login
+    // Called after Google login or OTP verified — sync localStorage to Redux state
     completeLogin(state) {
-      if (state.pendingToken) {
+      const token = localStorage.getItem('rmna_token');
+      const user = JSON.parse(localStorage.getItem('rmna_user') || 'null');
+      if (token && user) {
+        state.token = token;
+        state.user = user;
+        state.pendingToken = null;
+        state.pendingEmail = null;
+        localStorage.removeItem('rmna_pending_user');
+      } else if (state.pendingToken) {
+        // OTP flow fallback
         const storedUser = JSON.parse(localStorage.getItem('rmna_pending_user') || 'null');
         state.token = state.pendingToken;
         state.user = storedUser;

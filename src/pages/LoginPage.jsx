@@ -62,6 +62,9 @@ export default function LoginPage() {
       localStorage.setItem('rmna_token', res.data.token);
       localStorage.setItem('rmna_user', JSON.stringify(res.data.user));
       dispatch(completeLogin());
+      // Merge guest cart
+      const { mergeGuestCart } = await import('../store/slices/cartSlice');
+      setTimeout(() => dispatch(mergeGuestCart()), 200);
       toast.success(`Welcome, ${res.data.user.name}!`);
       navigate(from, { replace: true });
     } catch (err) {

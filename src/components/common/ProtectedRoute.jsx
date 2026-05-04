@@ -5,7 +5,11 @@ export default function ProtectedRoute() {
   const { token } = useSelector((s) => s.auth);
   const location = useLocation();
 
-  return token
+  // Also check localStorage as fallback for Google login timing
+  const localToken = localStorage.getItem('rmna_token');
+  const isAuth = token || localToken;
+
+  return isAuth
     ? <Outlet />
     : <Navigate to="/login" state={{ from: location.pathname }} replace />;
 }
