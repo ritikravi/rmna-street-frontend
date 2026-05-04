@@ -44,7 +44,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-zinc-800 py-4 text-center text-xs text-zinc-600">
-        © {new Date().getFullYear()} RMNA Street. All rights reserved.
+        © 2026 RMNA Street. All rights reserved. | Built by Ritik, Mayank, Nirmal & Ankit
       </div>
     </footer>
   );
