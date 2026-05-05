@@ -254,7 +254,7 @@ export default function LoginPage() {
                 <form onSubmit={handleRegister} className="space-y-4 mt-4">
                   <input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} placeholder="Full Name" required className="input-field" />
                   <input type="email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} placeholder="Email address" required className="input-field" />
-                  <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} placeholder="Phone Number (optional)" className="input-field" />
+                  <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} placeholder="Phone Number *" required pattern="[0-9]{10}" title="Enter 10-digit phone number" className="input-field" />
                   <input type="password" value={form.password} onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))} placeholder="Password (min 6 characters)" required minLength={6} className="input-field" />
                   <button type="submit" disabled={loading} className="btn-primary w-full">
                     {loading ? 'Creating account...' : 'Create Account'}
