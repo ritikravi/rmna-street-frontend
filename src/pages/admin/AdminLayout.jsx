@@ -1,7 +1,7 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
-import { FiGrid, FiPackage, FiShoppingBag, FiUsers, FiTag, FiLogOut } from 'react-icons/fi';
+import { FiGrid, FiPackage, FiShoppingBag, FiUsers, FiTag, FiLogOut, FiMessageSquare } from 'react-icons/fi';
 import Logo from '../../components/common/Logo';
 
 const navItems = [
@@ -10,6 +10,7 @@ const navItems = [
   { to: '/admin/orders', label: 'Orders', icon: FiShoppingBag },
   { to: '/admin/users', label: 'Users', icon: FiUsers },
   { to: '/admin/coupons', label: 'Coupons', icon: FiTag },
+  { to: '/admin/feedback', label: 'Feedback', icon: FiMessageSquare },
 ];
 
 export default function AdminLayout() {
