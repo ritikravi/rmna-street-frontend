@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FiMessageSquare, FiX, FiStar, FiSend } from 'react-icons/fi';
 import api from '../../utils/api';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 const TYPES = [
   { value: 'suggestion', label: '💡 Suggestion' },
@@ -11,12 +12,23 @@ const TYPES = [
 ];
 
 export default function FeedbackWidget() {
+  const { user } = useSelector((s) => s.auth);
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [form, setForm] = useState({ name: '', email: '', type: 'suggestion', message: '' });
+
+  const handleOpen = () => {
+    // Auto-fill name and email if logged in
+    setForm((f) => ({
+      ...f,
+      name: f.name || user?.name || '',
+      email: f.email || user?.email || '',
+    }));
+    setOpen(true);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +53,7 @@ export default function FeedbackWidget() {
     <>
       {/* Floating button */}
       <button
-        onClick={() => setOpen(true)}
+        onClick={handleOpen}
         className="fixed bottom-6 right-6 z-40 flex items-center gap-2 bg-zinc-900 text-white px-4 py-3 shadow-lg hover:bg-zinc-700 transition-colors text-sm font-medium"
         style={{ borderRadius: 2 }}
         aria-label="Give feedback"
@@ -131,7 +143,8 @@ export default function FeedbackWidget() {
                     type="email"
                     value={form.email}
                     onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                    placeholder="Email (optional)"
+                    placeholder="Email *"
+                    required
                     className="input-field text-sm"
                   />
                 </div>
