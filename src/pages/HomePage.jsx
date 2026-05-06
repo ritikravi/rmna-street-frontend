@@ -43,55 +43,54 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Shop by Category */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="font-display text-3xl font-bold">Shop by Category</h2>
+      {/* Discount Banner */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-10">
+        <div className="bg-gradient-to-r from-zinc-900 to-zinc-700 rounded-xl px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <p className="text-white text-2xl md:text-3xl font-bold">Upto <span className="text-red-400">50% OFF</span> on selected styles</p>
+            <p className="text-zinc-400 text-sm mt-1">Limited time offer · Free shipping on all orders</p>
+          </div>
+          <Link to="/products" className="bg-white text-zinc-900 font-semibold px-6 py-3 text-sm tracking-wider uppercase hover:bg-zinc-100 transition-colors whitespace-nowrap">
+            Shop Now
+          </Link>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      </section>
+
+      {/* Shop by Category — circular icons like Meesho */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        <h2 className="font-display text-2xl font-bold mb-8 text-center">Shop by Category</h2>
+        <div className="grid grid-cols-4 md:grid-cols-4 gap-6">
           {/* Men's Jeans */}
-          <Link to="/products" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
-            <img src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&q=80" alt="Men's Jeans"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            <div className="absolute inset-0 bg-black/40 flex items-end p-5">
-              <div>
-                <p className="text-zinc-300 text-xs uppercase tracking-widest mb-1">Men</p>
-                <h3 className="font-display text-white text-xl font-bold">Jeans</h3>
-              </div>
+          <Link to="/products" className="flex flex-col items-center gap-3 group">
+            <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-zinc-200 group-hover:border-zinc-900 transition-colors">
+              <img src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=300&q=80" alt="Men's Jeans"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
             </div>
+            <span className="text-sm font-medium text-center">Men's Jeans</span>
           </Link>
           {/* Girls Jeans */}
-          <Link to="/girls-jeans" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
-            <img src="https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=800&q=80" alt="Girls Jeans"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            <div className="absolute inset-0 bg-black/40 flex items-end p-5">
-              <div>
-                <p className="text-zinc-300 text-xs uppercase tracking-widest mb-1">Girls</p>
-                <h3 className="font-display text-white text-xl font-bold">Jeans</h3>
-              </div>
+          <Link to="/girls-jeans" className="flex flex-col items-center gap-3 group">
+            <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-zinc-200 group-hover:border-zinc-900 transition-colors">
+              <img src="https://images.pexels.com/photos/7691168/pexels-photo-7691168.jpeg?w=300&q=80" alt="Girls Jeans"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
             </div>
+            <span className="text-sm font-medium text-center">Girls Jeans</span>
           </Link>
           {/* Girls Kurti */}
-          <Link to="/girls-kurti" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
-            <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=800&q=80" alt="Girls Kurti"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            <div className="absolute inset-0 bg-black/40 flex items-end p-5">
-              <div>
-                <p className="text-zinc-300 text-xs uppercase tracking-widest mb-1">Girls</p>
-                <h3 className="font-display text-white text-xl font-bold">Kurti</h3>
-              </div>
+          <Link to="/girls-kurti" className="flex flex-col items-center gap-3 group">
+            <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-zinc-200 group-hover:border-zinc-900 transition-colors">
+              <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=300&q=80" alt="Girls Kurti"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
             </div>
+            <span className="text-sm font-medium text-center">Girls Kurti</span>
           </Link>
-          {/* Jewellery - All Accessories */}
-          <Link to="/women-accessories" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
-            <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80" alt="Jewellery"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            <div className="absolute inset-0 bg-black/40 flex items-end p-5">
-              <div>
-                <p className="text-zinc-300 text-xs uppercase tracking-widest mb-1">Women</p>
-                <h3 className="font-display text-white text-xl font-bold">Jewellery</h3>
-              </div>
+          {/* Jewellery */}
+          <Link to="/women-accessories" className="flex flex-col items-center gap-3 group">
+            <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-zinc-200 group-hover:border-zinc-900 transition-colors">
+              <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=300&q=80" alt="Jewellery"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
             </div>
+            <span className="text-sm font-medium text-center">Jewellery</span>
           </Link>
         </div>
       </section>
