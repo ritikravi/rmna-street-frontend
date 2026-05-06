@@ -39,7 +39,13 @@ export default function WomenAccessoriesPage() {
   }, [searchParams.toString()]);
 
   useEffect(() => {
-    const params = Object.fromEntries(Object.entries({ ...filters, category: 'women-accessories' }).filter(([, v]) => v));
+    const params = {};
+    params.category = 'women-accessories'; // always hardcoded, never stripped
+    if (filters.subcategory) params.subcategory = filters.subcategory;
+    if (filters.minPrice) params.minPrice = filters.minPrice;
+    if (filters.maxPrice) params.maxPrice = filters.maxPrice;
+    if (filters.sort) params.sort = filters.sort;
+    if (filters.page > 1) params.page = filters.page;
     dispatch(fetchProducts(params));
   }, [filters, dispatch]);
 
