@@ -71,7 +71,7 @@ export default function HomePage() {
           {/* Girls Jeans */}
           <Link to="/girls-jeans" className="flex flex-col items-center gap-3 group">
             <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-zinc-200 group-hover:border-zinc-900 transition-colors">
-              <img src="https://res.cloudinary.com/dymvnrcyl/image/upload/v1778062476/rmna-street/categories/girls-jeans.jpg" alt="Girls Jeans"
+              <img src="https://res.cloudinary.com/dymvnrcyl/image/upload/v1778063917/jeans_icon_pjk3j9.jpg" alt="Girls Jeans"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
             </div>
             <span className="text-sm font-medium text-center">Girls Jeans</span>
