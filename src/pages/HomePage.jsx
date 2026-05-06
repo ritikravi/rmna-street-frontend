@@ -43,32 +43,75 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Categories */}
+      {/* Shop by Category */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-        <div className="grid grid-cols-2 gap-4">
-          <Link to="/products?fitType=straight" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
-            <img
-              src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&q=80"
-              alt="Straight Fit"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-            <div className="absolute inset-0 bg-black/30 flex items-end p-6">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="font-display text-3xl font-bold">Shop by Category</h2>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {/* Men's Jeans */}
+          <Link to="/products" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
+            <img src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&q=80" alt="Men's Jeans"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-black/40 flex items-end p-5">
               <div>
-                <h2 className="font-display text-white text-2xl font-bold">Straight Fit</h2>
-                <p className="text-zinc-300 text-sm mt-1">Classic & timeless</p>
+                <p className="text-zinc-300 text-xs uppercase tracking-widest mb-1">Men</p>
+                <h3 className="font-display text-white text-xl font-bold">Jeans</h3>
               </div>
             </div>
           </Link>
-          <Link to="/products?fitType=baggy" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
-            <img
-              src="https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=800&q=80"
-              alt="Baggy Fit"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-            <div className="absolute inset-0 bg-black/30 flex items-end p-6">
+          {/* Girls Jeans */}
+          <Link to="/girls-jeans" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
+            <img src="https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=800&q=80" alt="Girls Jeans"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-black/40 flex items-end p-5">
               <div>
-                <h2 className="font-display text-white text-2xl font-bold">Baggy Fit</h2>
-                <p className="text-zinc-300 text-sm mt-1">Bold & oversized</p>
+                <p className="text-zinc-300 text-xs uppercase tracking-widest mb-1">Girls</p>
+                <h3 className="font-display text-white text-xl font-bold">Jeans</h3>
+              </div>
+            </div>
+          </Link>
+          {/* Girls Kurti */}
+          <Link to="/girls-kurti" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
+            <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=800&q=80" alt="Girls Kurti"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-black/40 flex items-end p-5">
+              <div>
+                <p className="text-zinc-300 text-xs uppercase tracking-widest mb-1">Girls</p>
+                <h3 className="font-display text-white text-xl font-bold">Kurti</h3>
+              </div>
+            </div>
+          </Link>
+          {/* Women Accessories */}
+          <Link to="/women-accessories" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
+            <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80" alt="Women Accessories"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-black/40 flex items-end p-5">
+              <div>
+                <p className="text-zinc-300 text-xs uppercase tracking-widest mb-1">Women</p>
+                <h3 className="font-display text-white text-xl font-bold">Accessories</h3>
+              </div>
+            </div>
+          </Link>
+          {/* Earrings */}
+          <Link to="/women-accessories?subcategory=earrings" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
+            <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80" alt="Earrings"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-black/40 flex items-end p-5">
+              <div>
+                <p className="text-zinc-300 text-xs uppercase tracking-widest mb-1">Jewellery</p>
+                <h3 className="font-display text-white text-xl font-bold">Earrings</h3>
+              </div>
+            </div>
+          </Link>
+          {/* Rings */}
+          <Link to="/women-accessories?subcategory=rings" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
+            <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80" alt="Rings"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-black/40 flex items-end p-5">
+              <div>
+                <p className="text-zinc-300 text-xs uppercase tracking-widest mb-1">Jewellery</p>
+                <h3 className="font-display text-white text-xl font-bold">Rings</h3>
               </div>
             </div>
           </Link>
