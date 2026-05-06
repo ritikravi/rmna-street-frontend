@@ -79,7 +79,7 @@ export default function HomePage() {
           {/* Girls Kurti */}
           <Link to="/girls-kurti" className="flex flex-col items-center gap-3 group">
             <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-zinc-200 group-hover:border-zinc-900 transition-colors">
-              <img src="https://res.cloudinary.com/dymvnrcyl/image/upload/v1778062767/rmna-street/categories/girls-kurti.jpg" alt="Girls Kurti"
+              <img src="https://res.cloudinary.com/dymvnrcyl/image/upload/v1778063723/kurti_ety3mk.jpg" alt="Girls Kurti"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
             </div>
             <span className="text-sm font-medium text-center">Girls Kurti</span>
