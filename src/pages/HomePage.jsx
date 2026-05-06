@@ -48,7 +48,7 @@ export default function HomePage() {
         <div className="flex items-center justify-between mb-8">
           <h2 className="font-display text-3xl font-bold">Shop by Category</h2>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {/* Men's Jeans */}
           <Link to="/products" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
             <img src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&q=80" alt="Men's Jeans"
@@ -82,36 +82,14 @@ export default function HomePage() {
               </div>
             </div>
           </Link>
-          {/* Women Accessories */}
+          {/* Jewellery - All Accessories */}
           <Link to="/women-accessories" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
-            <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80" alt="Women Accessories"
+            <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80" alt="Jewellery"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             <div className="absolute inset-0 bg-black/40 flex items-end p-5">
               <div>
                 <p className="text-zinc-300 text-xs uppercase tracking-widest mb-1">Women</p>
-                <h3 className="font-display text-white text-xl font-bold">Accessories</h3>
-              </div>
-            </div>
-          </Link>
-          {/* Earrings */}
-          <Link to="/women-accessories?subcategory=earrings" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
-            <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80" alt="Earrings"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            <div className="absolute inset-0 bg-black/40 flex items-end p-5">
-              <div>
-                <p className="text-zinc-300 text-xs uppercase tracking-widest mb-1">Jewellery</p>
-                <h3 className="font-display text-white text-xl font-bold">Earrings</h3>
-              </div>
-            </div>
-          </Link>
-          {/* Rings */}
-          <Link to="/women-accessories?subcategory=rings" className="relative group overflow-hidden aspect-[4/3] bg-zinc-100">
-            <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80" alt="Rings"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            <div className="absolute inset-0 bg-black/40 flex items-end p-5">
-              <div>
-                <p className="text-zinc-300 text-xs uppercase tracking-widest mb-1">Jewellery</p>
-                <h3 className="font-display text-white text-xl font-bold">Rings</h3>
+                <h3 className="font-display text-white text-xl font-bold">Jewellery</h3>
               </div>
             </div>
           </Link>
