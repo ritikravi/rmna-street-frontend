@@ -15,6 +15,8 @@ import OrderDetailPage from './pages/OrderDetailPage';
 import WishlistPage from './pages/WishlistPage';
 import ProfilePage from './pages/ProfilePage';
 import WomenAccessoriesPage from './pages/WomenAccessoriesPage';
+import GirlsJeansPage from './pages/GirlsJeansPage';
+import GirlsKurtiPage from './pages/GirlsKurtiPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
@@ -58,6 +60,8 @@ export default function App() {
         <Route path="products" element={<ProductsPage />} />
         <Route path="products/:id" element={<ProductDetailPage />} />
         <Route path="women-accessories" element={<WomenAccessoriesPage />} />
+        <Route path="girls-jeans" element={<GirlsJeansPage />} />
+        <Route path="girls-kurti" element={<GirlsKurtiPage />} />
         <Route path="cart" element={<CartPage />} />
         <Route path="wishlist" element={<WishlistPage />} />
 

@@ -13,14 +13,21 @@ const WOMEN_LINKS = [
   { to: '/women-accessories?subcategory=minimal-jewellery', label: 'Minimal Jewellery' },
 ];
 
+const GIRLS_LINKS = [
+  { to: '/girls-jeans', label: 'Girls Jeans' },
+  { to: '/girls-kurti', label: 'Girls Kurti' },
+];
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [womenOpen, setWomenOpen] = useState(false);
+  const [girlsOpen, setGirlsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const womenRef = useRef(null);
+  const girlsRef = useRef(null);
 
   const { user, token } = useSelector((s) => s.auth);
   const { items, guestItems } = useSelector((s) => s.cart);
@@ -38,6 +45,9 @@ export default function Navbar() {
       }
       if (womenRef.current && !womenRef.current.contains(e.target)) {
         setWomenOpen(false);
+      }
+      if (girlsRef.current && !girlsRef.current.contains(e.target)) {
+        setGirlsOpen(false);
       }
     };
     document.addEventListener('mousedown', handler);
@@ -91,12 +101,28 @@ export default function Navbar() {
               {womenOpen && (
                 <div className="absolute left-0 top-8 w-48 bg-white border border-zinc-200 shadow-xl z-50">
                   {WOMEN_LINKS.map((link) => (
-                    <Link
-                      key={link.to}
-                      to={link.to}
-                      onClick={() => setWomenOpen(false)}
-                      className="block px-4 py-2.5 text-sm hover:bg-zinc-50 transition-colors"
-                    >
+                    <Link key={link.to} to={link.to} onClick={() => setWomenOpen(false)}
+                      className="block px-4 py-2.5 text-sm hover:bg-zinc-50 transition-colors">
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+            {/* Girls Dropdown */}
+            <div className="relative" ref={girlsRef}>
+              <button
+                onClick={() => setGirlsOpen(!girlsOpen)}
+                className="flex items-center gap-1 text-sm font-medium tracking-wider uppercase hover:text-accent transition-colors"
+              >
+                Girls
+                <FiChevronDown size={14} className={`transition-transform ${girlsOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {girlsOpen && (
+                <div className="absolute left-0 top-8 w-44 bg-white border border-zinc-200 shadow-xl z-50">
+                  {GIRLS_LINKS.map((link) => (
+                    <Link key={link.to} to={link.to} onClick={() => setGirlsOpen(false)}
+                      className="block px-4 py-2.5 text-sm hover:bg-zinc-50 transition-colors">
                       {link.label}
                     </Link>
                   ))}
@@ -196,6 +222,12 @@ export default function Navbar() {
             {/* Women Accessories mobile links */}
             <p className="text-xs text-zinc-400 tracking-widest uppercase pt-1">Women</p>
             {WOMEN_LINKS.map((link) => (
+              <Link key={link.to} to={link.to} onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase pl-2">
+                {link.label}
+              </Link>
+            ))}
+            <p className="text-xs text-zinc-400 tracking-widest uppercase pt-1">Girls</p>
+            {GIRLS_LINKS.map((link) => (
               <Link key={link.to} to={link.to} onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase pl-2">
                 {link.label}
               </Link>
