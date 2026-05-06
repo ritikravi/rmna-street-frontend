@@ -6,7 +6,8 @@ import Logo from '../../components/common/Logo';
 
 const navItems = [
   { to: '/admin', label: 'Dashboard', icon: FiGrid, end: true },
-  { to: '/admin/products', label: 'Products', icon: FiPackage },
+  { to: '/admin/products', label: 'Jeans Products', icon: FiPackage },
+  { to: '/admin/women-products', label: 'Women Accessories', icon: FiPackage },
   { to: '/admin/orders', label: 'Orders', icon: FiShoppingBag },
   { to: '/admin/users', label: 'Users', icon: FiUsers },
   { to: '/admin/coupons', label: 'Coupons', icon: FiTag },

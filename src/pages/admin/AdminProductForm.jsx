@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import api from '../../utils/api';
 import toast from 'react-hot-toast';
 import { FiX, FiUpload, FiArrowLeft } from 'react-icons/fi';
@@ -10,12 +10,16 @@ const ACCESSORY_SUBCATEGORIES = ['earrings', 'nose-rings', 'rings', 'minimal-jew
 
 export default function AdminProductForm() {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const isEdit = Boolean(id);
 
+  // Pre-select category if coming from Women section
+  const defaultCategory = searchParams.get('category') || 'jeans';
+
   const [form, setForm] = useState({
     name: '', description: '', price: '', discountPrice: '',
-    category: 'jeans', subcategory: '', fitType: 'straight',
+    category: defaultCategory, subcategory: '', fitType: 'straight',
     tags: '', isFeatured: false, isActive: true,
   });
   const [sizes, setSizes] = useState(SIZES.map((s) => ({ size: s, stock: 0 })));
