@@ -63,7 +63,7 @@ export default function HomePage() {
           {/* Men's Jeans */}
           <Link to="/products" className="flex flex-col items-center gap-3 group">
             <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-zinc-200 group-hover:border-zinc-900 transition-colors">
-              <img src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=300&q=80" alt="Men's Jeans"
+              <img src="https://res.cloudinary.com/dymvnrcyl/image/upload/v1778064505/pexels-tien-nguyen-1378177-18533668_siuzdz.jpg" alt="Men's Jeans"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
             </div>
             <span className="text-sm font-medium text-center">Men's Jeans</span>
