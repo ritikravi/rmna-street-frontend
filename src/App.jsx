@@ -17,6 +17,7 @@ import ProfilePage from './pages/ProfilePage';
 import WomenAccessoriesPage from './pages/WomenAccessoriesPage';
 import GirlsJeansPage from './pages/GirlsJeansPage';
 import GirlsKurtiPage from './pages/GirlsKurtiPage';
+import MensShirtsPage from './pages/MensShirtsPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
@@ -62,6 +63,7 @@ export default function App() {
         <Route path="women-accessories" element={<WomenAccessoriesPage />} />
         <Route path="girls-jeans" element={<GirlsJeansPage />} />
         <Route path="girls-kurti" element={<GirlsKurtiPage />} />
+        <Route path="mens-shirts" element={<MensShirtsPage />} />
         <Route path="cart" element={<CartPage />} />
         <Route path="wishlist" element={<WishlistPage />} />
 

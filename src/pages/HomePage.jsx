@@ -50,7 +50,7 @@ export default function HomePage() {
             <p className="text-white text-2xl md:text-3xl font-bold">Upto <span className="text-red-400">50% OFF</span> on selected styles</p>
             <p className="text-zinc-400 text-sm mt-1">Limited time offer · Free shipping on all orders</p>
           </div>
-          <Link to="/products" className="bg-white text-zinc-900 font-semibold px-6 py-3 text-sm tracking-wider uppercase hover:bg-zinc-100 transition-colors whitespace-nowrap">
+          <Link to="/products?discounted=true" className="bg-white text-zinc-900 font-semibold px-6 py-3 text-sm tracking-wider uppercase hover:bg-zinc-100 transition-colors whitespace-nowrap">
             Shop Now
           </Link>
         </div>
@@ -59,7 +59,7 @@ export default function HomePage() {
       {/* Shop by Category — circular icons like Meesho */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <h2 className="font-display text-2xl font-bold mb-8 text-center">Shop by Category</h2>
-        <div className="grid grid-cols-4 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-5 md:grid-cols-5 gap-6">
           {/* Men's Jeans */}
           <Link to="/products" className="flex flex-col items-center gap-3 group">
             <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-zinc-200 group-hover:border-zinc-900 transition-colors">
@@ -67,6 +67,14 @@ export default function HomePage() {
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
             </div>
             <span className="text-sm font-medium text-center">Men's Jeans</span>
+          </Link>
+          {/* Men's Shirts */}
+          <Link to="/mens-shirts" className="flex flex-col items-center gap-3 group">
+            <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-zinc-200 group-hover:border-zinc-900 transition-colors">
+              <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=300&q=80" alt="Men's Shirts"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+            </div>
+            <span className="text-sm font-medium text-center">Men's Shirts</span>
           </Link>
           {/* Girls Jeans */}
           <Link to="/girls-jeans" className="flex flex-col items-center gap-3 group">

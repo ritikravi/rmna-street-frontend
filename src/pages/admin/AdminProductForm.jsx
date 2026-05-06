@@ -13,6 +13,7 @@ const ACCESSORY_SUBCATEGORIES = ['earrings', 'nose-rings', 'rings', 'minimal-jew
 
 const CATEGORIES = [
   { value: 'jeans', label: "Men's Jeans" },
+  { value: 'mens-shirts', label: "Men's Shirts" },
   { value: 'girls-jeans', label: "Girls Jeans" },
   { value: 'girls-kurti', label: "Girls Kurti" },
   { value: 'women-accessories', label: 'Women Accessories' },
@@ -20,7 +21,7 @@ const CATEGORIES = [
 
 const getDefaultSizes = (category, subcategory) => {
   if (category === 'girls-jeans') return GIRLS_JEANS_SIZES.map((s) => ({ size: s, stock: 0 }));
-  if (category === 'girls-kurti') return KURTI_SIZES.map((s) => ({ size: s, stock: 0 }));
+  if (category === 'girls-kurti' || category === 'mens-shirts') return KURTI_SIZES.map((s) => ({ size: s, stock: 0 }));
   if (category === 'women-accessories') {
     if (subcategory === 'rings') return RING_SIZES.map((s) => ({ size: s, stock: 0 }));
     return [{ size: 'free-size', stock: 0 }];
@@ -291,8 +292,8 @@ export default function AdminProductForm() {
               </div>
             )}
 
-            {/* Girls Kurti: S M L XL XXL */}
-            {form.category === 'girls-kurti' && (
+            {/* Girls Kurti / Men's Shirts: S M L XL XXL */}
+            {(form.category === 'girls-kurti' || form.category === 'mens-shirts') && (
               <div className="grid grid-cols-3 gap-3">
                 {sizes.map((s, i) => (
                   <div key={s.size} className="flex items-center gap-2 border p-2">

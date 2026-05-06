@@ -18,6 +18,11 @@ const GIRLS_LINKS = [
   { to: '/girls-kurti', label: 'Girls Kurti' },
 ];
 
+const MENS_LINKS = [
+  { to: '/products', label: "Men's Jeans" },
+  { to: '/mens-shirts', label: "Men's Shirts" },
+];
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -25,9 +30,11 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [womenOpen, setWomenOpen] = useState(false);
   const [girlsOpen, setGirlsOpen] = useState(false);
+  const [mensOpen, setMensOpen] = useState(false);
   const dropdownRef = useRef(null);
   const womenRef = useRef(null);
   const girlsRef = useRef(null);
+  const mensRef = useRef(null);
 
   const { user, token } = useSelector((s) => s.auth);
   const { items, guestItems } = useSelector((s) => s.cart);
@@ -48,6 +55,9 @@ export default function Navbar() {
       }
       if (girlsRef.current && !girlsRef.current.contains(e.target)) {
         setGirlsOpen(false);
+      }
+      if (mensRef.current && !mensRef.current.contains(e.target)) {
+        setMensOpen(false);
       }
     };
     document.addEventListener('mousedown', handler);
@@ -80,15 +90,24 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
-            <Link to="/products" className="text-sm font-medium tracking-wider uppercase hover:text-accent transition-colors">
-              Shop
-            </Link>
-            <Link to="/products?fitType=straight" className="text-sm font-medium tracking-wider uppercase hover:text-accent transition-colors">
-              Straight Fit
-            </Link>
-            <Link to="/products?fitType=baggy" className="text-sm font-medium tracking-wider uppercase hover:text-accent transition-colors">
-              Baggy Fit
-            </Link>
+            {/* Men's Dropdown */}
+            <div className="relative" ref={mensRef}>
+              <button onClick={() => setMensOpen(!mensOpen)}
+                className="flex items-center gap-1 text-sm font-medium tracking-wider uppercase hover:text-accent transition-colors">
+                Men
+                <FiChevronDown size={14} className={`transition-transform ${mensOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {mensOpen && (
+                <div className="absolute left-0 top-8 w-44 bg-white border border-zinc-200 shadow-xl z-50">
+                  {MENS_LINKS.map((link) => (
+                    <Link key={link.to} to={link.to} onClick={() => setMensOpen(false)}
+                      className="block px-4 py-2.5 text-sm hover:bg-zinc-50 transition-colors">
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
             {/* Women Accessories Dropdown */}
             <div className="relative" ref={womenRef}>
               <button
@@ -217,6 +236,7 @@ export default function Navbar() {
         {menuOpen && (
           <nav className="md:hidden pb-4 flex flex-col gap-3">
             <Link to="/products" onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase">Shop All</Link>
+            <Link to="/mens-shirts" onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase">Men's Shirts</Link>
             <Link to="/products?fitType=straight" onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase">Straight Fit</Link>
             <Link to="/products?fitType=baggy" onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase">Baggy Fit</Link>
             {/* Women Accessories mobile links */}
