@@ -5,7 +5,7 @@ import { fetchProduct } from '../store/slices/productSlice';
 import { addToCart, addGuestItem } from '../store/slices/cartSlice';
 import { toggleWishlist } from '../store/slices/wishlistSlice';
 import { formatPrice, getDiscount } from '../utils/helpers';
-import { FiHeart, FiStar, FiShoppingBag } from 'react-icons/fi';
+import { FiHeart, FiStar, FiZap, FiShoppingBag } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import api from '../utils/api';
 
@@ -46,20 +46,34 @@ export default function ProductDetailPage() {
   const isWishlisted = wishlistProducts.some((p) => (p._id || p) === product._id);
   const selectedSizeObj = product.sizes.find((s) => s.size === selectedSize);
 
-  const handleAddToCart = async () => {
-    if (!selectedSize) { toast.error('Please select a size'); return; }
+  const getEffectiveSize = () => selectedSize || (
+    product.category === 'women-accessories' && product.sizes.length === 1
+      ? product.sizes[0].size
+      : ''
+  );
 
+  const handleAddToCart = async () => {
+    const effectiveSize = getEffectiveSize();
+    if (!effectiveSize) { toast.error('Please select a size'); return; }
     if (!token) {
-      // Guest cart — no login needed
-      dispatch(addGuestItem({ productId: product._id, size: selectedSize, quantity: 1, product }));
+      dispatch(addGuestItem({ productId: product._id, size: effectiveSize, quantity: 1, product }));
       toast.success('Added to cart');
       return;
     }
-    const result = await dispatch(addToCart({ productId: product._id, size: selectedSize, quantity: 1 }));
+    const result = await dispatch(addToCart({ productId: product._id, size: effectiveSize, quantity: 1 }));
+    if (addToCart.fulfilled.match(result)) toast.success('Added to cart');
+    else toast.error(result.payload || 'Failed to add to cart');
+  };
+
+  const handleBuyNow = async () => {
+    const effectiveSize = getEffectiveSize();
+    if (!effectiveSize) { toast.error('Please select a size'); return; }
+    if (!token) { navigate('/login'); return; }
+    const result = await dispatch(addToCart({ productId: product._id, size: effectiveSize, quantity: 1 }));
     if (addToCart.fulfilled.match(result)) {
-      toast.success('Added to cart');
+      navigate('/checkout');
     } else {
-      toast.error(result.payload || 'Failed to add to cart');
+      toast.error(result.payload || 'Failed');
     }
   };
 
@@ -140,11 +154,12 @@ export default function ProductDetailPage() {
 
           <p className="text-zinc-600 text-sm leading-relaxed mb-6">{product.description}</p>
 
-          {/* Size selector */}
+          {/* Size selector — hidden for one-size accessories */}
+          {!(product.category === 'women-accessories' && product.sizes.every((s) => s.size === 'one-size')) && (
           <div className="mb-6">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold tracking-wider uppercase">Select Size</h3>
-              <button className="text-xs text-zinc-500 underline">Size Guide</button>
+              {product.category === 'jeans' && <button className="text-xs text-zinc-500 underline">Size Guide</button>}
             </div>
             <div className="flex gap-2 flex-wrap">
               {product.sizes.map((s) => (
@@ -170,12 +185,21 @@ export default function ProductDetailPage() {
               </p>
             )}
           </div>
+          )}
 
           {/* Actions */}
           <div className="flex gap-3 mb-8">
-            <button onClick={handleAddToCart} className="btn-primary flex-1 flex items-center justify-center gap-2">
-              <FiShoppingBag size={18} />
-              Add to Cart
+            <button onClick={handleBuyNow} className="btn-primary flex-1 flex items-center justify-center gap-2">
+              <FiZap size={18} />
+              Buy Now
+            </button>
+            <button
+              onClick={handleAddToCart}
+              className="flex items-center justify-center gap-1.5 px-4 py-2 border border-zinc-300 hover:border-zinc-900 text-sm transition-colors"
+              aria-label="Add to cart"
+            >
+              <FiShoppingBag size={16} />
+              Cart
             </button>
             <button
               onClick={handleWishlist}

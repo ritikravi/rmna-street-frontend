@@ -5,12 +5,22 @@ import { FiShoppingBag, FiHeart, FiUser, FiMenu, FiX, FiSearch, FiChevronDown } 
 import { logout } from '../../store/slices/authSlice';
 import Logo from '../common/Logo';
 
+const WOMEN_LINKS = [
+  { to: '/women-accessories', label: 'All Accessories' },
+  { to: '/women-accessories?subcategory=earrings', label: 'Earrings' },
+  { to: '/women-accessories?subcategory=nose-rings', label: 'Nose Rings' },
+  { to: '/women-accessories?subcategory=rings', label: 'Rings' },
+  { to: '/women-accessories?subcategory=minimal-jewellery', label: 'Minimal Jewellery' },
+];
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [womenOpen, setWomenOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const womenRef = useRef(null);
 
   const { user, token } = useSelector((s) => s.auth);
   const { items, guestItems } = useSelector((s) => s.cart);
@@ -25,6 +35,9 @@ export default function Navbar() {
     const handler = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setDropdownOpen(false);
+      }
+      if (womenRef.current && !womenRef.current.contains(e.target)) {
+        setWomenOpen(false);
       }
     };
     document.addEventListener('mousedown', handler);
@@ -66,6 +79,30 @@ export default function Navbar() {
             <Link to="/products?fitType=baggy" className="text-sm font-medium tracking-wider uppercase hover:text-accent transition-colors">
               Baggy Fit
             </Link>
+            {/* Women Accessories Dropdown */}
+            <div className="relative" ref={womenRef}>
+              <button
+                onClick={() => setWomenOpen(!womenOpen)}
+                className="flex items-center gap-1 text-sm font-medium tracking-wider uppercase hover:text-accent transition-colors"
+              >
+                Women
+                <FiChevronDown size={14} className={`transition-transform ${womenOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {womenOpen && (
+                <div className="absolute left-0 top-8 w-48 bg-white border border-zinc-200 shadow-xl z-50">
+                  {WOMEN_LINKS.map((link) => (
+                    <Link
+                      key={link.to}
+                      to={link.to}
+                      onClick={() => setWomenOpen(false)}
+                      className="block px-4 py-2.5 text-sm hover:bg-zinc-50 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </nav>
 
           {/* Icons */}
@@ -156,6 +193,13 @@ export default function Navbar() {
             <Link to="/products" onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase">Shop All</Link>
             <Link to="/products?fitType=straight" onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase">Straight Fit</Link>
             <Link to="/products?fitType=baggy" onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase">Baggy Fit</Link>
+            {/* Women Accessories mobile links */}
+            <p className="text-xs text-zinc-400 tracking-widest uppercase pt-1">Women</p>
+            {WOMEN_LINKS.map((link) => (
+              <Link key={link.to} to={link.to} onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase pl-2">
+                {link.label}
+              </Link>
+            ))}
             {user && (
               <>
                 <Link to="/orders" onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase">My Orders</Link>

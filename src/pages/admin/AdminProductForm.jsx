@@ -6,6 +6,7 @@ import { FiX, FiUpload, FiArrowLeft } from 'react-icons/fi';
 import { formatPrice } from '../../utils/helpers';
 
 const SIZES = ['28', '30', '32', '34', '36', '38'];
+const ACCESSORY_SUBCATEGORIES = ['earrings', 'nose-rings', 'rings', 'minimal-jewellery'];
 
 export default function AdminProductForm() {
   const { id } = useParams();
@@ -14,7 +15,8 @@ export default function AdminProductForm() {
 
   const [form, setForm] = useState({
     name: '', description: '', price: '', discountPrice: '',
-    fitType: 'straight', tags: '', isFeatured: false, isActive: true,
+    category: 'jeans', subcategory: '', fitType: 'straight',
+    tags: '', isFeatured: false, isActive: true,
   });
   const [sizes, setSizes] = useState(SIZES.map((s) => ({ size: s, stock: 0 })));
   const [files, setFiles] = useState([]);
@@ -28,7 +30,8 @@ export default function AdminProductForm() {
         const p = r.data.product;
         setForm({
           name: p.name, description: p.description, price: p.price,
-          discountPrice: p.discountPrice || '', fitType: p.fitType,
+          discountPrice: p.discountPrice || '', fitType: p.fitType || 'straight',
+          category: p.category || 'jeans', subcategory: p.subcategory || '',
           tags: p.tags?.join(', ') || '', isFeatured: p.isFeatured, isActive: p.isActive,
         });
         setSizes(SIZES.map((s) => {
@@ -48,8 +51,12 @@ export default function AdminProductForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.name || !form.price || !form.fitType) {
-      toast.error('Name, price and fit type are required');
+    if (!form.name || !form.price) {
+      toast.error('Name and price are required');
+      return;
+    }
+    if (form.category === 'jeans' && !form.fitType) {
+      toast.error('Fit type is required for jeans');
       return;
     }
     setLoading(true);
@@ -160,24 +167,64 @@ export default function AdminProductForm() {
             )}
           </div>
 
-          {/* Fit Type */}
+          {/* Category */}
           <div className="bg-white border rounded p-5 space-y-4">
-            <h2 className="font-semibold text-sm uppercase tracking-wider text-zinc-500">Fit Type</h2>
-            <div className="grid grid-cols-4 gap-3">
-              {['straight', 'baggy', 'slim', 'regular'].map((fit) => (
+            <h2 className="font-semibold text-sm uppercase tracking-wider text-zinc-500">Category</h2>
+            <div className="grid grid-cols-2 gap-3">
+              {['jeans', 'women-accessories'].map((cat) => (
                 <button
-                  key={fit}
+                  key={cat}
                   type="button"
-                  onClick={() => setForm((f) => ({ ...f, fitType: fit }))}
+                  onClick={() => setForm((f) => ({ ...f, category: cat, subcategory: '' }))}
                   className={`py-2 text-sm border capitalize transition-colors ${
-                    form.fitType === fit ? 'bg-zinc-900 text-white border-zinc-900' : 'border-zinc-300 hover:border-zinc-900'
+                    form.category === cat ? 'bg-zinc-900 text-white border-zinc-900' : 'border-zinc-300 hover:border-zinc-900'
                   }`}
                 >
-                  {fit}
+                  {cat === 'jeans' ? 'Jeans' : 'Women Accessories'}
                 </button>
               ))}
             </div>
+            {form.category === 'women-accessories' && (
+              <div>
+                <label className="text-xs text-zinc-500 block mb-2">Subcategory</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {ACCESSORY_SUBCATEGORIES.map((sub) => (
+                    <button
+                      key={sub}
+                      type="button"
+                      onClick={() => setForm((f) => ({ ...f, subcategory: sub }))}
+                      className={`py-2 text-sm border capitalize transition-colors ${
+                        form.subcategory === sub ? 'bg-zinc-900 text-white border-zinc-900' : 'border-zinc-300 hover:border-zinc-900'
+                      }`}
+                    >
+                      {sub.replace('-', ' ')}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
+
+          {/* Fit Type — only for jeans */}
+          {form.category === 'jeans' && (
+            <div className="bg-white border rounded p-5 space-y-4">
+              <h2 className="font-semibold text-sm uppercase tracking-wider text-zinc-500">Fit Type</h2>
+              <div className="grid grid-cols-4 gap-3">
+                {['straight', 'baggy', 'slim', 'regular'].map((fit) => (
+                  <button
+                    key={fit}
+                    type="button"
+                    onClick={() => setForm((f) => ({ ...f, fitType: fit }))}
+                    className={`py-2 text-sm border capitalize transition-colors ${
+                      form.fitType === fit ? 'bg-zinc-900 text-white border-zinc-900' : 'border-zinc-300 hover:border-zinc-900'
+                    }`}
+                  >
+                    {fit}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Sizes & Stock */}
           <div className="bg-white border rounded p-5 space-y-4">

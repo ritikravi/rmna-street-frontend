@@ -14,6 +14,7 @@ import OrdersPage from './pages/OrdersPage';
 import OrderDetailPage from './pages/OrderDetailPage';
 import WishlistPage from './pages/WishlistPage';
 import ProfilePage from './pages/ProfilePage';
+import WomenAccessoriesPage from './pages/WomenAccessoriesPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
@@ -54,6 +55,7 @@ export default function App() {
         <Route index element={<HomePage />} />
         <Route path="products" element={<ProductsPage />} />
         <Route path="products/:id" element={<ProductDetailPage />} />
+        <Route path="women-accessories" element={<WomenAccessoriesPage />} />
         <Route path="cart" element={<CartPage />} />
         <Route path="wishlist" element={<WishlistPage />} />
 
