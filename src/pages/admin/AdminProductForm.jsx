@@ -5,8 +5,16 @@ import toast from 'react-hot-toast';
 import { FiX, FiUpload, FiArrowLeft } from 'react-icons/fi';
 import { formatPrice } from '../../utils/helpers';
 
-const SIZES = ['28', '30', '32', '34', '36', '38'];
+const JEANS_SIZES = ['28', '30', '32', '34', '36', '38'];
+const RING_SIZES = ['6', '7', '8', '9', '10'];
 const ACCESSORY_SUBCATEGORIES = ['earrings', 'nose-rings', 'rings', 'minimal-jewellery'];
+
+// Returns the correct sizes array based on category/subcategory
+const getDefaultSizes = (category, subcategory) => {
+  if (category !== 'women-accessories') return JEANS_SIZES.map((s) => ({ size: s, stock: 0 }));
+  if (subcategory === 'rings') return RING_SIZES.map((s) => ({ size: s, stock: 0 }));
+  return [{ size: 'free-size', stock: 0 }];
+};
 
 export default function AdminProductForm() {
   const { id } = useParams();
@@ -22,7 +30,7 @@ export default function AdminProductForm() {
     category: defaultCategory, subcategory: '', fitType: 'straight',
     tags: '', isFeatured: false, isActive: true,
   });
-  const [sizes, setSizes] = useState(SIZES.map((s) => ({ size: s, stock: 0 })));
+  const [sizes, setSizes] = useState(getDefaultSizes(defaultCategory, ''));
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
   const [existingImages, setExistingImages] = useState([]);
@@ -38,10 +46,8 @@ export default function AdminProductForm() {
           category: p.category || 'jeans', subcategory: p.subcategory || '',
           tags: p.tags?.join(', ') || '', isFeatured: p.isFeatured, isActive: p.isActive,
         });
-        setSizes(SIZES.map((s) => {
-          const found = p.sizes.find((ps) => ps.size === s);
-          return { size: s, stock: found?.stock || 0 };
-        }));
+        // Load existing sizes or use defaults
+        setSizes(p.sizes && p.sizes.length > 0 ? p.sizes : getDefaultSizes(p.category, p.subcategory));
         setExistingImages(p.images || []);
       });
     }
@@ -179,8 +185,10 @@ export default function AdminProductForm() {
                 <button
                   key={cat}
                   type="button"
-                  onClick={() => setForm((f) => ({ ...f, category: cat, subcategory: '' }))}
-                  className={`py-2 text-sm border capitalize transition-colors ${
+                  onClick={() => {
+                    setForm((f) => ({ ...f, category: cat, subcategory: '' }));
+                    setSizes(getDefaultSizes(cat, ''));
+                  }}                  className={`py-2 text-sm border capitalize transition-colors ${
                     form.category === cat ? 'bg-zinc-900 text-white border-zinc-900' : 'border-zinc-300 hover:border-zinc-900'
                   }`}
                 >
@@ -196,7 +204,10 @@ export default function AdminProductForm() {
                     <button
                       key={sub}
                       type="button"
-                      onClick={() => setForm((f) => ({ ...f, subcategory: sub }))}
+                      onClick={() => {
+                        setForm((f) => ({ ...f, subcategory: sub }));
+                        setSizes(getDefaultSizes('women-accessories', sub));
+                      }}
                       className={`py-2 text-sm border capitalize transition-colors ${
                         form.subcategory === sub ? 'bg-zinc-900 text-white border-zinc-900' : 'border-zinc-300 hover:border-zinc-900'
                       }`}
@@ -233,25 +244,72 @@ export default function AdminProductForm() {
           {/* Sizes & Stock */}
           <div className="bg-white border rounded p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="font-semibold text-sm uppercase tracking-wider text-zinc-500">Sizes & Stock</h2>
+              <h2 className="font-semibold text-sm uppercase tracking-wider text-zinc-500">
+                {form.category === 'women-accessories' && form.subcategory === 'rings' ? 'Ring Sizes & Stock' : 'Sizes & Stock'}
+              </h2>
               <span className="text-xs text-zinc-400">Total stock: {totalStock}</span>
             </div>
-            <div className="grid grid-cols-3 gap-3">
-              {sizes.map((s, i) => (
-                <div key={s.size} className="flex items-center gap-2 border p-2">
-                  <span className="text-sm font-bold w-8 text-center">{s.size}</span>
-                  <input
-                    type="number"
-                    min="0"
-                    value={s.stock}
-                    onChange={(e) => setSizes((prev) => prev.map((ps, pi) => pi === i ? { ...ps, stock: Number(e.target.value) } : ps))}
-                    className="flex-1 text-sm border-0 focus:outline-none text-center"
-                    placeholder="0"
-                  />
-                  <span className="text-xs text-zinc-400">pcs</span>
-                </div>
-              ))}
-            </div>
+
+            {/* Free Size — earrings, nose-rings, minimal-jewellery */}
+            {form.category === 'women-accessories' && form.subcategory !== 'rings' && form.subcategory !== '' && (
+              <div className="flex items-center gap-4 border p-3 bg-zinc-50 rounded">
+                <span className="text-sm font-semibold text-zinc-700 w-24">Free Size</span>
+                <input
+                  type="number"
+                  min="0"
+                  value={sizes[0]?.stock || 0}
+                  onChange={(e) => setSizes([{ size: 'free-size', stock: Number(e.target.value) }])}
+                  className="w-24 text-sm border border-zinc-300 px-3 py-1.5 focus:outline-none focus:border-zinc-900 text-center"
+                  placeholder="0"
+                />
+                <span className="text-xs text-zinc-400">pcs</span>
+              </div>
+            )}
+
+            {/* Ring sizes 6–10 */}
+            {form.category === 'women-accessories' && form.subcategory === 'rings' && (
+              <div className="grid grid-cols-3 gap-3">
+                {sizes.map((s, i) => (
+                  <div key={s.size} className="flex items-center gap-2 border p-2">
+                    <span className="text-sm font-bold w-6 text-center">{s.size}</span>
+                    <input
+                      type="number"
+                      min="0"
+                      value={s.stock}
+                      onChange={(e) => setSizes((prev) => prev.map((ps, pi) => pi === i ? { ...ps, stock: Number(e.target.value) } : ps))}
+                      className="flex-1 text-sm border-0 focus:outline-none text-center"
+                      placeholder="0"
+                    />
+                    <span className="text-xs text-zinc-400">pcs</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Jeans sizes */}
+            {form.category === 'jeans' && (
+              <div className="grid grid-cols-3 gap-3">
+                {sizes.map((s, i) => (
+                  <div key={s.size} className="flex items-center gap-2 border p-2">
+                    <span className="text-sm font-bold w-8 text-center">{s.size}</span>
+                    <input
+                      type="number"
+                      min="0"
+                      value={s.stock}
+                      onChange={(e) => setSizes((prev) => prev.map((ps, pi) => pi === i ? { ...ps, stock: Number(e.target.value) } : ps))}
+                      className="flex-1 text-sm border-0 focus:outline-none text-center"
+                      placeholder="0"
+                    />
+                    <span className="text-xs text-zinc-400">pcs</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Prompt to pick subcategory first */}
+            {form.category === 'women-accessories' && !form.subcategory && (
+              <p className="text-sm text-zinc-400 italic">Select a subcategory above to set stock</p>
+            )}
           </div>
 
           {/* Images */}
