@@ -1,17 +1,37 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../store/slices/productSlice';
 import ProductCard from '../components/product/ProductCard';
 import Logo from '../components/common/Logo';
+import api from '../utils/api';
+
+const CATEGORY_SECTIONS = [
+  { key: 'jeans',             label: "Men's Jeans",   link: '/products' },
+  { key: 'mens-shirts',       label: "Men's Shirts",  link: '/mens-shirts' },
+  { key: 'girls-jeans',       label: 'Girls Jeans',   link: '/girls-jeans' },
+  { key: 'girls-kurti',       label: 'Girls Kurti',   link: '/girls-kurti' },
+  { key: 'women-accessories', label: 'Jewellery',     link: '/women-accessories' },
+];
 
 export default function HomePage() {
-  const dispatch = useDispatch();
-  const { items: featured, loading } = useSelector((s) => s.products);
+  const [categoryProducts, setCategoryProducts] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(fetchProducts({ featured: true, limit: 8 }));
-  }, [dispatch]);
+    const fetchAll = async () => {
+      const results = {};
+      await Promise.all(
+        CATEGORY_SECTIONS.map(async ({ key }) => {
+          try {
+            const res = await api.get('/products', { params: { category: key, featured: 'true', limit: 4 } });
+            if (res.data.products.length > 0) results[key] = res.data.products;
+          } catch {}
+        })
+      );
+      setCategoryProducts(results);
+      setLoading(false);
+    };
+    fetchAll();
+  }, []);
 
   return (
     <div>
@@ -103,17 +123,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="font-display text-3xl font-bold">Featured Drops</h2>
-          <Link to="/products" className="text-sm tracking-wider uppercase underline hover:text-accent">
-            View All
-          </Link>
-        </div>
-        {loading ? (
+      {/* Featured by Category */}
+      {loading ? (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
+          <div className="h-8 bg-zinc-200 rounded w-48 mb-6 animate-pulse" />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[...Array(8)].map((_, i) => (
+            {[...Array(4)].map((_, i) => (
               <div key={i} className="animate-pulse">
                 <div className="bg-zinc-200 aspect-[3/4]" />
                 <div className="mt-3 space-y-2">
@@ -123,12 +138,24 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-        ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {featured.map((p) => <ProductCard key={p._id} product={p} />)}
-          </div>
-        )}
-      </section>
+        </section>
+      ) : (
+        CATEGORY_SECTIONS.map(({ key, label, link }) =>
+          categoryProducts[key] ? (
+            <section key={key} className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="font-display text-2xl font-bold">{label}</h2>
+                <Link to={link} className="text-sm tracking-wider uppercase underline hover:text-accent">
+                  View All
+                </Link>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                {categoryProducts[key].map((p) => <ProductCard key={p._id} product={p} />)}
+              </div>
+            </section>
+          ) : null
+        )
+      )}
 
       {/* USP Banner */}
       <section className="bg-zinc-900 text-white py-12">
