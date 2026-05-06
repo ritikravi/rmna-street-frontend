@@ -71,7 +71,7 @@ export default function HomePage() {
           {/* Men's Shirts */}
           <Link to="/mens-shirts" className="flex flex-col items-center gap-3 group">
             <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-zinc-200 group-hover:border-zinc-900 transition-colors">
-              <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=300&q=80" alt="Men's Shirts"
+              <img src="https://res.cloudinary.com/dymvnrcyl/image/upload/v1778066087/mens_shirt_acxqdx.jpg" alt="Men's Shirts"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
             </div>
             <span className="text-sm font-medium text-center">Men's Shirts</span>
