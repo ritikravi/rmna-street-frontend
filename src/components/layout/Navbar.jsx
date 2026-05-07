@@ -20,7 +20,7 @@ const GIRLS_LINKS = [
 ];
 
 const MENS_LINKS = [
-  { to: '/products', label: "Men's Jeans" },
+  { to: '/products?category=jeans', label: "Men's Jeans" },
   { to: '/mens-shirts', label: "Men's Shirts" },
 ];
 
