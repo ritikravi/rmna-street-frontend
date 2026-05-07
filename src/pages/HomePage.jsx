@@ -81,7 +81,7 @@ export default function HomePage() {
         <h2 className="font-display text-2xl font-bold mb-8 text-center">Shop by Category</h2>
         <div className="grid grid-cols-5 md:grid-cols-5 gap-6">
           {/* Men's Jeans */}
-          <Link to="/products" className="flex flex-col items-center gap-3 group">
+          <Link to="/products?category=jeans" className="flex flex-col items-center gap-3 group">
             <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-zinc-200 group-hover:border-zinc-900 transition-colors">
               <img src="https://res.cloudinary.com/dymvnrcyl/image/upload/v1778064505/pexels-tien-nguyen-1378177-18533668_siuzdz.jpg" alt="Men's Jeans"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
