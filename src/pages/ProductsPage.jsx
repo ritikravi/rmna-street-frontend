@@ -48,12 +48,23 @@ export default function ProductsPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      {/* Hero Banner for Men's Jeans */}
+      {filters.category === 'jeans' && (
+        <div className="mb-8 bg-zinc-900 text-white px-8 py-10 text-center">
+          <p className="text-xs tracking-[0.3em] uppercase text-zinc-400 mb-2">Premium Collection</p>
+          <h1 className="font-display text-4xl font-bold tracking-tight">Men's Jeans</h1>
+          <p className="text-zinc-400 text-sm mt-2">Sizes 28 · 30 · 32 · 34 · 36 · 38</p>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-display text-3xl font-bold">
-            {filters.keyword ? `"${filters.keyword}"` : filters.fitType ? `${filters.fitType} Fit` : 'All Products'}
-          </h1>
+          {!filters.category && (
+            <h1 className="font-display text-3xl font-bold">
+              {filters.keyword ? `"${filters.keyword}"` : filters.fitType ? `${filters.fitType} Fit` : 'All Products'}
+            </h1>
+          )}
           <p className="text-zinc-500 text-sm mt-1">{total} products</p>
         </div>
         <div className="flex items-center gap-3">
