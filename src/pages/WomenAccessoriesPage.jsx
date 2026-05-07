@@ -11,6 +11,7 @@ const SUBCATEGORY_LABELS = {
   earrings: 'Earrings',
   'nose-rings': 'Nose Rings',
   rings: 'Rings',
+  bracelets: 'Bracelets',
   'minimal-jewellery': 'Minimal Jewellery',
 };
 
@@ -61,7 +62,7 @@ export default function WomenAccessoriesPage() {
       <div className="mb-8 bg-zinc-900 text-white px-8 py-10 text-center">
         <p className="text-xs tracking-[0.3em] uppercase text-zinc-400 mb-2">New Collection</p>
         <h1 className="font-display text-4xl font-bold tracking-tight">Women Accessories</h1>
-        <p className="text-zinc-400 text-sm mt-2">Earrings · Nose Rings · Rings · Minimal Jewellery</p>
+        <p className="text-zinc-400 text-sm mt-2">Earrings · Nose Rings · Rings · Bracelets · Minimal Jewellery</p>
       </div>
 
       {/* Subcategory quick-filter pills */}

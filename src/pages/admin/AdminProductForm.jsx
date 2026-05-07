@@ -9,7 +9,7 @@ const JEANS_SIZES = ['28', '30', '32', '34', '36', '38'];
 const GIRLS_JEANS_SIZES = ['26', '28', '30', '32', '34', '36'];
 const KURTI_SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
 const RING_SIZES = ['6', '7', '8', '9', '10'];
-const ACCESSORY_SUBCATEGORIES = ['earrings', 'nose-rings', 'rings', 'minimal-jewellery'];
+const ACCESSORY_SUBCATEGORIES = ['earrings', 'nose-rings', 'rings', 'bracelets', 'minimal-jewellery'];
 
 const CATEGORIES = [
   { value: 'jeans', label: "Men's Jeans" },

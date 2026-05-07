@@ -3,6 +3,7 @@ const SUBCATEGORIES = [
   { value: 'earrings', label: 'Earrings' },
   { value: 'nose-rings', label: 'Nose Rings' },
   { value: 'rings', label: 'Rings' },
+  { value: 'bracelets', label: 'Bracelets' },
   { value: 'minimal-jewellery', label: 'Minimal Jewellery' },
 ];
 

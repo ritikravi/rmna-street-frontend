@@ -14,6 +14,7 @@ export default function ProductsPage() {
 
   const [filters, setFilters] = useState({
     keyword: searchParams.get('keyword') || '',
+    category: searchParams.get('category') || '',
     fitType: searchParams.get('fitType') || '',
     size: searchParams.get('size') || '',
     minPrice: searchParams.get('minPrice') || '',
@@ -26,6 +27,7 @@ export default function ProductsPage() {
   useEffect(() => {
     setFilters({
       keyword: searchParams.get('keyword') || '',
+      category: searchParams.get('category') || '',
       fitType: searchParams.get('fitType') || '',
       size: searchParams.get('size') || '',
       minPrice: searchParams.get('minPrice') || '',

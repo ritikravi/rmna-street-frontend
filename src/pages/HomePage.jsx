@@ -5,7 +5,7 @@ import Logo from '../components/common/Logo';
 import api from '../utils/api';
 
 const CATEGORY_SECTIONS = [
-  { key: 'jeans',             label: "Men's Jeans",   link: '/products' },
+  { key: 'jeans',             label: "Men's Jeans",   link: '/products?category=jeans' },
   { key: 'mens-shirts',       label: "Men's Shirts",  link: '/mens-shirts' },
   { key: 'girls-jeans',       label: 'Girls Jeans',   link: '/girls-jeans' },
   { key: 'girls-kurti',       label: 'Girls Kurti',   link: '/girls-kurti' },
