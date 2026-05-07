@@ -18,6 +18,7 @@ import WomenAccessoriesPage from './pages/WomenAccessoriesPage';
 import GirlsJeansPage from './pages/GirlsJeansPage';
 import GirlsKurtiPage from './pages/GirlsKurtiPage';
 import MensShirtsPage from './pages/MensShirtsPage';
+import FeedbackPage from './pages/FeedbackPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
@@ -66,6 +67,7 @@ export default function App() {
         <Route path="mens-shirts" element={<MensShirtsPage />} />
         <Route path="cart" element={<CartPage />} />
         <Route path="wishlist" element={<WishlistPage />} />
+        <Route path="feedback" element={<FeedbackPage />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="checkout" element={<CheckoutPage />} />
