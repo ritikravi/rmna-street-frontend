@@ -10,6 +10,7 @@ const WOMEN_LINKS = [
   { to: '/women-accessories?subcategory=earrings', label: 'Earrings' },
   { to: '/women-accessories?subcategory=nose-rings', label: 'Nose Rings' },
   { to: '/women-accessories?subcategory=rings', label: 'Rings' },
+  { to: '/women-accessories?subcategory=bracelets', label: 'Bracelets' },
   { to: '/women-accessories?subcategory=minimal-jewellery', label: 'Minimal Jewellery' },
 ];
 
@@ -108,13 +109,13 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-            {/* Women Accessories Dropdown */}
+            {/* Jewellery Dropdown */}
             <div className="relative" ref={womenRef}>
               <button
                 onClick={() => setWomenOpen(!womenOpen)}
                 className="flex items-center gap-1 text-sm font-medium tracking-wider uppercase hover:text-accent transition-colors"
               >
-                Women
+                Jewellery
                 <FiChevronDown size={14} className={`transition-transform ${womenOpen ? 'rotate-180' : ''}`} />
               </button>
               {womenOpen && (
@@ -239,8 +240,8 @@ export default function Navbar() {
             <Link to="/mens-shirts" onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase">Men's Shirts</Link>
             <Link to="/products?fitType=straight" onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase">Straight Fit</Link>
             <Link to="/products?fitType=baggy" onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase">Baggy Fit</Link>
-            {/* Women Accessories mobile links */}
-            <p className="text-xs text-zinc-400 tracking-widest uppercase pt-1">Women</p>
+            {/* Jewellery mobile links */}
+            <p className="text-xs text-zinc-400 tracking-widest uppercase pt-1">Jewellery</p>
             {WOMEN_LINKS.map((link) => (
               <Link key={link.to} to={link.to} onClick={() => setMenuOpen(false)} className="text-sm font-medium tracking-wider uppercase pl-2">
                 {link.label}
