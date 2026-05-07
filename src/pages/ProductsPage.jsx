@@ -40,6 +40,8 @@ export default function ProductsPage() {
   useEffect(() => {
     const params = Object.fromEntries(Object.entries(filters).filter(([, v]) => v));
     dispatch(fetchProducts(params));
+    // Scroll to top when page changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [filters, dispatch]);
 
   const handleFilterChange = (updates) => {

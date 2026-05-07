@@ -20,6 +20,7 @@ export default function MensShirtsPage() {
     if (filters.sort) params.sort = filters.sort;
     if (filters.page > 1) params.page = filters.page;
     dispatch(fetchProducts(params));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [filters, dispatch]);
 
   const handleFilterChange = (updates) => setFilters((prev) => ({ ...prev, ...updates, page: 1 }));
