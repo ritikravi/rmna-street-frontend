@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProfile } from '../store/slices/authSlice';
 import api from '../utils/api';
 import toast from 'react-hot-toast';
+import { FiCopy, FiCheck } from 'react-icons/fi';
 
 export default function ProfilePage() {
   const { user } = useSelector((s) => s.auth);
@@ -11,6 +12,28 @@ export default function ProfilePage() {
   const [addingAddr, setAddingAddr] = useState(false);
   const [addr, setAddr] = useState({ fullName: '', phone: '', street: '', city: '', state: '', pincode: '', isDefault: false });
   const [saving, setSaving] = useState(false);
+  const [earlyAccessCoupon, setEarlyAccessCoupon] = useState(null);
+  const [copied, setCopied] = useState(false);
+
+  // Fetch early access coupon
+  useEffect(() => {
+    const fetchCoupon = async () => {
+      try {
+        const res = await api.get('/auth/early-access-coupon');
+        if (res.data.coupon) setEarlyAccessCoupon(res.data.coupon);
+      } catch (err) {
+        console.error('Failed to fetch early access coupon');
+      }
+    };
+    fetchCoupon();
+  }, []);
+
+  const handleCopyCoupon = () => {
+    navigator.clipboard.writeText(earlyAccessCoupon.code);
+    setCopied(true);
+    toast.success('Coupon code copied!');
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const handleProfileSave = async (e) => {
     e.preventDefault();
@@ -51,6 +74,44 @@ export default function ProfilePage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
       <h1 className="font-display text-3xl font-bold mb-8">My Profile</h1>
+
+      {/* Early Access Reward */}
+      {earlyAccessCoupon && !earlyAccessCoupon.isUsed && (
+        <div className="bg-gradient-to-r from-zinc-900 to-zinc-800 text-white p-6 rounded-lg mb-8 border-2 border-red-600">
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-red-400 text-xs font-semibold tracking-widest uppercase mb-2">🎉 Early Access Reward</p>
+              <h2 className="text-2xl font-bold mb-2">₹{earlyAccessCoupon.discount} OFF</h2>
+              <p className="text-zinc-400 text-sm mb-4">
+                You're one of the first 150 users! Use this exclusive coupon on orders above ₹{earlyAccessCoupon.minOrder}
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="bg-white text-zinc-900 px-4 py-2 rounded font-mono font-bold text-lg">
+                  {earlyAccessCoupon.code}
+                </div>
+                <button
+                  type="button"
+                  onClick={handleCopyCoupon}
+                  className="flex items-center gap-2 bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm font-semibold transition-colors"
+                >
+                  {copied ? <><FiCheck size={16} /> Copied!</> : <><FiCopy size={16} /> Copy</>}
+                </button>
+              </div>
+              <p className="text-zinc-500 text-xs mt-3">
+                Expires: {new Date(earlyAccessCoupon.expiresAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {earlyAccessCoupon && earlyAccessCoupon.isUsed && (
+        <div className="bg-zinc-100 border border-zinc-300 p-6 rounded-lg mb-8">
+          <p className="text-zinc-600 text-sm">
+            ✅ You've already used your early access coupon. Thank you for being one of our first customers!
+          </p>
+        </div>
+      )}
 
       {/* Profile form */}
       <form onSubmit={handleProfileSave} className="border p-6 mb-8 space-y-4">
