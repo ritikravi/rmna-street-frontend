@@ -5,12 +5,14 @@ import { fetchProducts } from '../store/slices/productSlice';
 import ProductCard from '../components/product/ProductCard';
 import ProductFilters from '../components/product/ProductFilters';
 import { FiFilter, FiX } from 'react-icons/fi';
+import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
 
 export default function ProductsPage() {
   const dispatch = useDispatch();
   const { items, loading, total, pages } = useSelector((s) => s.products);
   const [searchParams, setSearchParams] = useSearchParams();
   const [showFilters, setShowFilters] = useState(false);
+  const { allItems, currentPage, hasMore, lastItemRef, reset } = useInfiniteScroll(items, pages, loading);
 
   const [filters, setFilters] = useState({
     keyword: searchParams.get('keyword') || '',
@@ -20,7 +22,6 @@ export default function ProductsPage() {
     minPrice: searchParams.get('minPrice') || '',
     maxPrice: searchParams.get('maxPrice') || '',
     sort: searchParams.get('sort') || 'newest',
-    page: Number(searchParams.get('page')) || 1,
   });
 
   // Sync URL params to filters when navigating from navbar links
@@ -33,19 +34,20 @@ export default function ProductsPage() {
       minPrice: searchParams.get('minPrice') || '',
       maxPrice: searchParams.get('maxPrice') || '',
       sort: searchParams.get('sort') || 'newest',
-      page: Number(searchParams.get('page')) || 1,
     });
+    reset();
   }, [searchParams.toString()]);
 
+  // Load products when filters or page changes
   useEffect(() => {
-    const params = Object.fromEntries(Object.entries(filters).filter(([, v]) => v));
+    const params = { ...Object.fromEntries(Object.entries(filters).filter(([, v]) => v)), page: currentPage };
     dispatch(fetchProducts(params));
-    // Scroll to top when page changes
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [filters, dispatch]);
+  }, [filters, currentPage, dispatch]);
 
   const handleFilterChange = (updates) => {
-    setFilters((prev) => ({ ...prev, ...updates, page: 1 }));
+    setFilters((prev) => ({ ...prev, ...updates }));
+    reset();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -112,19 +114,7 @@ export default function ProductsPage() {
 
         {/* Products Grid */}
         <div className="flex-1">
-          {loading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {[...Array(9)].map((_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="bg-zinc-200 aspect-[3/4]" />
-                  <div className="mt-3 space-y-2">
-                    <div className="h-3 bg-zinc-200 rounded w-1/2" />
-                    <div className="h-4 bg-zinc-200 rounded w-3/4" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : items.length === 0 ? (
+          {allItems.length === 0 && !loading ? (
             <div className="text-center py-20">
               <p className="text-zinc-500 text-lg">No products found</p>
               <button onClick={() => handleFilterChange({ keyword: '', fitType: '', size: '', minPrice: '', maxPrice: '' })} className="mt-4 text-sm underline">
@@ -134,23 +124,28 @@ export default function ProductsPage() {
           ) : (
             <>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-                {items.map((p) => <ProductCard key={p._id} product={p} />)}
+                {allItems.map((p, index) => {
+                  if (allItems.length === index + 1) {
+                    return <div key={p._id} ref={lastItemRef}><ProductCard product={p} /></div>;
+                  }
+                  return <ProductCard key={p._id} product={p} />;
+                })}
               </div>
-              {/* Pagination */}
-              {pages > 1 && (
-                <div className="flex justify-center gap-2 mt-10">
-                  {[...Array(pages)].map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setFilters((prev) => ({ ...prev, page: i + 1 }))}
-                      className={`w-9 h-9 text-sm border transition-colors ${
-                        filters.page === i + 1 ? 'bg-zinc-900 text-white border-zinc-900' : 'border-zinc-300 hover:border-zinc-900'
-                      }`}
-                    >
-                      {i + 1}
-                    </button>
+              {loading && (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mt-6">
+                  {[...Array(6)].map((_, i) => (
+                    <div key={i} className="animate-pulse">
+                      <div className="bg-zinc-200 aspect-[3/4]" />
+                      <div className="mt-3 space-y-2">
+                        <div className="h-3 bg-zinc-200 rounded w-1/2" />
+                        <div className="h-4 bg-zinc-200 rounded w-3/4" />
+                      </div>
+                    </div>
                   ))}
                 </div>
+              )}
+              {!hasMore && allItems.length > 0 && (
+                <p className="text-center text-zinc-400 text-sm py-8">You've reached the end</p>
               )}
             </>
           )}
