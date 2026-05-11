@@ -8,6 +8,7 @@ import { formatPrice, getDiscount } from '../utils/helpers';
 import { FiHeart, FiStar, FiZap, FiShoppingBag } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import api from '../utils/api';
+import ProductSchema from '../components/common/ProductSchema';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -98,7 +99,9 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+    <>
+      <ProductSchema product={product} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
       <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
         {/* Images */}
         <div className="space-y-3">
@@ -275,6 +278,6 @@ export default function ProductDetailPage() {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }

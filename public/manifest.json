@@ -1,0 +1,20 @@
+{
+  "name": "RMNA Street - Premium Streetwear",
+  "short_name": "RMNA Street",
+  "description": "Shop premium men's jeans, shirts, women's kurti, and jewellery",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "lifestyle"],
+  "screenshots": []
+}
