@@ -5,6 +5,7 @@ import { fetchProduct } from '../store/slices/productSlice';
 import { addToCart, addGuestItem } from '../store/slices/cartSlice';
 import { toggleWishlist } from '../store/slices/wishlistSlice';
 import { formatPrice, getDiscount } from '../utils/helpers';
+import { addToRecentlyViewed } from '../utils/recentlyViewed';
 import { FiHeart, FiStar, FiZap, FiShoppingBag } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import api from '../utils/api';
@@ -26,6 +27,12 @@ export default function ProductDetailPage() {
   useEffect(() => {
     dispatch(fetchProduct(id));
   }, [id, dispatch]);
+
+  useEffect(() => {
+    if (product) {
+      addToRecentlyViewed(product);
+    }
+  }, [product]);
 
   if (loading || !product) {
     return (

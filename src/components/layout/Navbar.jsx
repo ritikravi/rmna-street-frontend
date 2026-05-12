@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FiShoppingBag, FiHeart, FiUser, FiMenu, FiX, FiSearch, FiChevronDown } from 'react-icons/fi';
 import { logout } from '../../store/slices/authSlice';
 import Logo from '../common/Logo';
+import SearchBar from '../common/SearchBar';
 
 const WOMEN_LINKS = [
   { to: '/women-accessories', label: 'All Accessories' },
@@ -27,7 +28,6 @@ const MENS_LINKS = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [womenOpen, setWomenOpen] = useState(false);
   const [girlsOpen, setGirlsOpen] = useState(false);
@@ -64,15 +64,6 @@ export default function Navbar() {
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, []);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/products?keyword=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchOpen(false);
-      setSearchQuery('');
-    }
-  };
 
   const handleLogout = () => {
     setDropdownOpen(false);
@@ -220,17 +211,11 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Search bar */}
+        {/* Search bar with autocomplete */}
         {searchOpen && (
-          <form onSubmit={handleSearch} className="pb-3">
-            <input
-              autoFocus
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search jeans, fits..."
-              className="w-full border-b border-zinc-300 py-2 text-sm focus:outline-none focus:border-zinc-900"
-            />
-          </form>
+          <div className="pb-3">
+            <SearchBar onClose={() => setSearchOpen(false)} />
+          </div>
         )}
 
         {/* Mobile menu */}
