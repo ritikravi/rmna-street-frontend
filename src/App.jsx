@@ -3,6 +3,7 @@ import Layout from './components/layout/Layout';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import AdminRoute from './components/common/AdminRoute';
 import ScrollToTop from './components/common/ScrollToTop';
+import WhatsAppButton from './components/common/WhatsAppButton';
 
 // ── Customer pages ──────────────────────────────────────────
 import HomePage from './pages/HomePage';
@@ -39,6 +40,7 @@ export default function App() {
   return (
     <>
       <ScrollToTop />
+      <WhatsAppButton />
       <Routes>
       {/* ── Admin world (completely separate) ── */}
       <Route path="/admin/login" element={<AdminLoginPage />} />
