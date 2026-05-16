@@ -24,38 +24,65 @@ export default function ProductCard({ product }) {
 
   return (
     <Link to={`/products/${product._id}`} className="group block">
-      <div className="relative overflow-hidden bg-zinc-100 aspect-[3/4]">
+      {/* Image Container with Premium Hover Effect */}
+      <div className="relative overflow-hidden bg-zinc-50 aspect-[3/4] mb-4">
         <img
           src={product.images[0]?.url || 'https://placehold.co/400x533?text=RMNA'}
           alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
           loading="lazy"
         />
+        
+        {/* Gradient Overlay on Hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        
+        {/* Discount Badge */}
         {discount > 0 && (
-          <span className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-0.5 font-medium">
-            -{discount}%
+          <span className="absolute top-3 left-3 bg-red-500 text-white text-xs px-3 py-1.5 font-bold tracking-wider uppercase shadow-lg">
+            {discount}% OFF
           </span>
         )}
+        
+        {/* Sold Out Overlay */}
         {product.totalStock === 0 && (
-          <div className="absolute inset-0 bg-white/60 flex items-center justify-center">
-            <span className="text-sm font-medium tracking-wider uppercase">Sold Out</span>
+          <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center">
+            <span className="text-sm font-bold tracking-widest uppercase text-zinc-900 bg-white px-6 py-2 shadow-lg">
+              Sold Out
+            </span>
           </div>
         )}
+        
+        {/* Wishlist Button */}
         <button
           onClick={handleWishlist}
-          className={`absolute top-2 right-2 p-2 bg-white rounded-full shadow transition-colors ${isWishlisted ? 'text-red-500' : 'text-zinc-400 hover:text-red-500'}`}
+          className={`absolute top-3 right-3 p-2.5 bg-white/90 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 hover:scale-110 ${
+            isWishlisted ? 'text-red-500' : 'text-zinc-600 hover:text-red-500'
+          }`}
           aria-label="Toggle wishlist"
         >
-          <FiHeart size={16} fill={isWishlisted ? 'currentColor' : 'none'} />
+          <FiHeart size={18} fill={isWishlisted ? 'currentColor' : 'none'} strokeWidth={2} />
         </button>
+        
+        {/* Quick View Hint */}
+        <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm py-3 px-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+          <p className="text-xs font-semibold tracking-wider uppercase text-center text-zinc-900">
+            Quick View →
+          </p>
+        </div>
       </div>
-      <div className="mt-3">
-        <p className="text-xs text-zinc-500 uppercase tracking-wider">{product.fitType} fit</p>
-        <h3 className="text-sm font-medium mt-0.5 line-clamp-1">{product.name}</h3>
-        <div className="flex items-center gap-2 mt-1">
-          <span className="font-semibold">{formatPrice(displayPrice)}</span>
+      
+      {/* Product Info */}
+      <div className="space-y-1.5">
+        <p className="text-xs text-zinc-500 uppercase tracking-widest font-medium">
+          {product.fitType} fit
+        </p>
+        <h3 className="text-sm font-semibold leading-tight line-clamp-2 group-hover:text-zinc-600 transition-colors">
+          {product.name}
+        </h3>
+        <div className="flex items-baseline gap-2 pt-1">
+          <span className="text-lg font-bold text-zinc-900">{formatPrice(displayPrice)}</span>
           {discount > 0 && (
-            <span className="text-xs text-zinc-400 line-through">{formatPrice(product.price)}</span>
+            <span className="text-sm text-zinc-400 line-through">{formatPrice(product.price)}</span>
           )}
         </div>
       </div>

@@ -3,23 +3,101 @@
 @tailwind utilities;
 
 @layer base {
-  * { box-sizing: border-box; }
-  body { @apply font-sans text-zinc-900 bg-white antialiased; }
-  h1, h2, h3 { @apply font-display; }
+  * { 
+    box-sizing: border-box; 
+  }
+  
+  body { 
+    @apply font-sans text-zinc-900 bg-white antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 { 
+    @apply font-display;
+    letter-spacing: -0.02em;
+  }
+  
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl font-bold; }
+  h2 { @apply text-3xl md:text-4xl font-bold; }
+  h3 { @apply text-2xl md:text-3xl font-semibold; }
 }
 
 @layer components {
+  /* Premium Buttons */
   .btn-primary {
-    @apply bg-zinc-900 text-white px-6 py-3 text-sm font-medium tracking-wider uppercase hover:bg-zinc-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-zinc-900 text-white px-8 py-4 text-sm font-semibold tracking-wide uppercase;
+    @apply hover:bg-zinc-800 active:bg-black transition-all duration-300;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply shadow-sm hover:shadow-md;
+    letter-spacing: 0.05em;
   }
+  
   .btn-outline {
-    @apply border border-zinc-900 text-zinc-900 px-6 py-3 text-sm font-medium tracking-wider uppercase hover:bg-zinc-900 hover:text-white transition-colors duration-200;
+    @apply border-2 border-zinc-900 text-zinc-900 px-8 py-4 text-sm font-semibold tracking-wide uppercase;
+    @apply hover:bg-zinc-900 hover:text-white transition-all duration-300;
+    @apply shadow-sm hover:shadow-md;
+    letter-spacing: 0.05em;
   }
+  
+  .btn-secondary {
+    @apply bg-white text-zinc-900 border-2 border-zinc-200 px-8 py-4 text-sm font-semibold tracking-wide uppercase;
+    @apply hover:border-zinc-900 transition-all duration-300;
+    @apply shadow-sm hover:shadow-md;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Premium Input Fields */
   .input-field {
-    @apply w-full border border-zinc-300 px-4 py-3 text-sm focus:outline-none focus:border-zinc-900 transition-colors;
+    @apply w-full border-2 border-zinc-200 px-5 py-4 text-sm;
+    @apply focus:outline-none focus:border-zinc-900 transition-all duration-300;
+    @apply placeholder:text-zinc-400;
+    background-color: #fafafa;
   }
+  
+  .input-field:focus {
+    background-color: white;
+  }
+  
+  /* Premium Badges */
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 text-xs font-medium;
+    @apply inline-flex items-center px-3 py-1.5 text-xs font-semibold tracking-wider uppercase;
+    letter-spacing: 0.08em;
+  }
+  
+  .badge-sale {
+    @apply bg-red-500 text-white;
+  }
+  
+  .badge-new {
+    @apply bg-zinc-900 text-white;
+  }
+  
+  .badge-featured {
+    @apply bg-amber-500 text-white;
+  }
+  
+  /* Premium Cards */
+  .card {
+    @apply bg-white border border-zinc-100 shadow-sm hover:shadow-lg transition-all duration-300;
+  }
+  
+  .card-product {
+    @apply group cursor-pointer overflow-hidden;
+    @apply hover:shadow-xl transition-all duration-500;
+  }
+  
+  /* Premium Sections */
+  .section {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+  
+  .section-sm {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
 
