@@ -1,9 +1,55 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import ColorFilter from './ColorFilter';
+import BrandFilter from './BrandFilter';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+
 export default function ProductFilters({ filters, onChange }) {
   const sizes = ['28', '30', '32', '34', '36', '38'];
   const fits = ['straight', 'baggy', 'slim', 'regular'];
+  const [metadata, setMetadata] = useState({ colors: [], brands: [] });
+
+  useEffect(() => {
+    fetchFilterMetadata();
+  }, [filters.category]);
+
+  const fetchFilterMetadata = async () => {
+    try {
+      const params = filters.category ? `?category=${filters.category}` : '';
+      const { data } = await axios.get(`${API_URL}/products/filters${params}`);
+      if (data.success) {
+        setMetadata(data.filters);
+      }
+    } catch (error) {
+      console.error('Failed to fetch filter metadata:', error);
+    }
+  };
 
   return (
     <aside className="space-y-6">
+      {/* Color Filter */}
+      {metadata.colors.length > 0 && (
+        <div>
+          <ColorFilter
+            selectedColor={filters.color || ''}
+            onChange={(color) => onChange({ color })}
+            availableColors={metadata.colors}
+          />
+        </div>
+      )}
+
+      {/* Brand Filter */}
+      {metadata.brands.length > 0 && (
+        <div>
+          <BrandFilter
+            selectedBrands={filters.brands || []}
+            onChange={(brands) => onChange({ brands })}
+            availableBrands={metadata.brands}
+          />
+        </div>
+      )}
+
       <div>
         <h3 className="text-sm font-semibold tracking-wider uppercase mb-3">Fit Type</h3>
         <div className="space-y-2">
@@ -72,7 +118,7 @@ export default function ProductFilters({ filters, onChange }) {
       </div>
 
       <button
-        onClick={() => onChange({ fitType: '', size: '', minPrice: '', maxPrice: '' })}
+        onClick={() => onChange({ fitType: '', size: '', minPrice: '', maxPrice: '', color: '', brands: [] })}
         className="text-sm text-zinc-500 underline hover:text-zinc-900"
       >
         Clear filters

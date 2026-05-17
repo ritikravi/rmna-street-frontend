@@ -22,6 +22,8 @@ export default function ProductsPage() {
     minPrice: searchParams.get('minPrice') || '',
     maxPrice: searchParams.get('maxPrice') || '',
     sort: searchParams.get('sort') || 'newest',
+    color: searchParams.get('color') || '',
+    brands: searchParams.get('brand') ? searchParams.get('brand').split(',') : [],
   });
 
   // Sync URL params to filters when navigating from navbar links
@@ -34,13 +36,22 @@ export default function ProductsPage() {
       minPrice: searchParams.get('minPrice') || '',
       maxPrice: searchParams.get('maxPrice') || '',
       sort: searchParams.get('sort') || 'newest',
+      color: searchParams.get('color') || '',
+      brands: searchParams.get('brand') ? searchParams.get('brand').split(',') : [],
     });
     reset();
   }, [searchParams.toString()]);
 
   // Load products when filters or page changes
   useEffect(() => {
-    const params = { ...Object.fromEntries(Object.entries(filters).filter(([, v]) => v)), page: currentPage };
+    const params = { 
+      ...Object.fromEntries(Object.entries(filters).filter(([k, v]) => v && k !== 'brands')), 
+      page: currentPage 
+    };
+    // Add brands as comma-separated string
+    if (filters.brands && filters.brands.length > 0) {
+      params.brand = filters.brands.join(',');
+    }
     dispatch(fetchProducts(params));
   }, [filters, currentPage, dispatch]);
 

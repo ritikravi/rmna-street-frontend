@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FiHeart } from 'react-icons/fi';
 import { toggleWishlist } from '../../store/slices/wishlistSlice';
 import { formatPrice, getDiscount } from '../../utils/helpers';
+import CompareButton from './CompareButton';
 import toast from 'react-hot-toast';
 
 export default function ProductCard({ product }) {
@@ -62,6 +63,11 @@ export default function ProductCard({ product }) {
         >
           <FiHeart size={18} fill={isWishlisted ? 'currentColor' : 'none'} strokeWidth={2} />
         </button>
+        
+        {/* Compare Button */}
+        <div className="absolute top-14 right-3">
+          <CompareButton product={product} />
+        </div>
         
         {/* Quick View Hint */}
         <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm py-3 px-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
