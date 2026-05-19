@@ -11,6 +11,12 @@ const KURTI_SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
 const RING_SIZES = ['6', '7', '8', '9', '10'];
 const ACCESSORY_SUBCATEGORIES = ['earrings', 'nose-rings', 'rings', 'bracelets', 'minimal-jewellery'];
 
+const COLORS = [
+  'black', 'white', 'blue', 'red', 'green', 'yellow', 
+  'pink', 'purple', 'gray', 'brown', 'beige', 'navy', 
+  'maroon', 'olive', 'orange', 'multicolor'
+];
+
 const CATEGORIES = [
   { value: 'jeans', label: "Men's Jeans" },
   { value: 'mens-shirts', label: "Men's Shirts" },
@@ -42,6 +48,7 @@ export default function AdminProductForm() {
     name: '', description: '', price: '', discountPrice: '',
     category: defaultCategory, subcategory: '', fitType: 'straight',
     tags: '', isFeatured: false, isActive: true,
+    color: 'black', brand: 'RMNA',
   });
   const [sizes, setSizes] = useState(getDefaultSizes(defaultCategory, ''));
   const [files, setFiles] = useState([]);
@@ -58,6 +65,7 @@ export default function AdminProductForm() {
           discountPrice: p.discountPrice || '', fitType: p.fitType || 'straight',
           category: p.category || 'jeans', subcategory: p.subcategory || '',
           tags: p.tags?.join(', ') || '', isFeatured: p.isFeatured, isActive: p.isActive,
+          color: p.color || 'black', brand: p.brand || 'RMNA',
         });
         // Load existing sizes or use defaults
         setSizes(p.sizes && p.sizes.length > 0 ? p.sizes : getDefaultSizes(p.category, p.subcategory));
@@ -232,6 +240,36 @@ export default function AdminProductForm() {
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Color & Brand */}
+          <div className="bg-white border rounded p-5 space-y-4">
+            <h2 className="font-semibold text-sm uppercase tracking-wider text-zinc-500">Color & Brand</h2>
+            <div>
+              <label className="text-xs text-zinc-500 block mb-2">Color *</label>
+              <select
+                value={form.color}
+                onChange={(e) => setForm((f) => ({ ...f, color: e.target.value }))}
+                required
+                className="input-field capitalize"
+              >
+                {COLORS.map((color) => (
+                  <option key={color} value={color} className="capitalize">
+                    {color}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="text-xs text-zinc-500 block mb-2">Brand *</label>
+              <input
+                value={form.brand}
+                onChange={(e) => setForm((f) => ({ ...f, brand: e.target.value }))}
+                placeholder="e.g. RMNA, Levi's, Nike"
+                required
+                className="input-field"
+              />
+            </div>
           </div>
 
           {/* Fit Type — only for men's jeans */}

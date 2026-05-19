@@ -8,8 +8,16 @@ import { formatPrice, getDiscount } from '../utils/helpers';
 import { addToRecentlyViewed } from '../utils/recentlyViewed';
 import { FiHeart, FiStar, FiZap, FiShoppingBag } from 'react-icons/fi';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 import api from '../utils/api';
 import ProductSchema from '../components/common/ProductSchema';
+import ImageZoom from '../components/product/ImageZoom';
+import SizeGuideButton from '../components/product/SizeGuideButton';
+import SizeGuideModal from '../components/product/SizeGuideModal';
+import NotifyMeButton from '../components/product/NotifyMeButton';
+import StockNotificationModal from '../components/product/StockNotificationModal';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -23,6 +31,9 @@ export default function ProductDetailPage() {
   const [activeImg, setActiveImg] = useState(0);
   const [review, setReview] = useState({ rating: 5, comment: '' });
   const [submittingReview, setSubmittingReview] = useState(false);
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
+  const [showNotifyModal, setShowNotifyModal] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   useEffect(() => {
     dispatch(fetchProduct(id));
@@ -31,8 +42,29 @@ export default function ProductDetailPage() {
   useEffect(() => {
     if (product) {
       addToRecentlyViewed(product);
+      checkSubscription();
     }
   }, [product]);
+
+  const checkSubscription = async () => {
+    if (!product || product.totalStock > 0) return;
+    const email = user?.email;
+    if (!email) return;
+
+    try {
+      const { data } = await axios.post(`${API_URL}/notifications/check-subscription`, {
+        productId: product._id,
+        email
+      });
+      setIsSubscribed(data.isSubscribed);
+    } catch (error) {
+      console.error('Failed to check subscription:', error);
+    }
+  };
+
+  const handleSubscribed = () => {
+    setIsSubscribed(true);
+  };
 
   if (loading || !product) {
     return (
@@ -110,13 +142,13 @@ export default function ProductDetailPage() {
       <ProductSchema product={product} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
       <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
-        {/* Images */}
+        {/* Images with Zoom */}
         <div className="space-y-3">
           <div className="aspect-[3/4] bg-zinc-100 overflow-hidden">
-            <img
-              src={product.images[activeImg]?.url || 'https://placehold.co/600x800?text=RMNA'}
+            <ImageZoom
+              imageUrl={product.images[activeImg]?.url || 'https://placehold.co/600x800?text=RMNA'}
+              highResImageUrl={product.highResImages?.[activeImg]?.url}
               alt={product.name}
-              className="w-full h-full object-cover"
             />
           </div>
           {product.images.length > 1 && (
@@ -169,7 +201,9 @@ export default function ProductDetailPage() {
           <div className="mb-6">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold tracking-wider uppercase">Select Size</h3>
-              {product.category === 'jeans' && <button className="text-xs text-zinc-500 underline">Size Guide</button>}
+              {(product.sizeGuide || product.category !== 'women-accessories') && (
+                <SizeGuideButton onClick={() => setShowSizeGuide(true)} />
+              )}
             </div>
             <div className="flex gap-2 flex-wrap">
               {product.sizes.map((s) => (
@@ -198,27 +232,36 @@ export default function ProductDetailPage() {
           )}
 
           {/* Actions */}
-          <div className="flex gap-3 mb-8">
-            <button onClick={handleBuyNow} className="btn-primary flex-1 flex items-center justify-center gap-2">
-              <FiZap size={18} />
-              Buy Now
-            </button>
-            <button
-              onClick={handleAddToCart}
-              className="flex items-center justify-center gap-1.5 px-4 py-2 border border-zinc-300 hover:border-zinc-900 text-sm transition-colors"
-              aria-label="Add to cart"
-            >
-              <FiShoppingBag size={16} />
-              Cart
-            </button>
-            <button
-              onClick={handleWishlist}
-              className={`p-3 border transition-colors ${isWishlisted ? 'bg-red-50 border-red-300 text-red-500' : 'border-zinc-300 hover:border-zinc-900'}`}
-              aria-label="Wishlist"
-            >
-              <FiHeart size={20} fill={isWishlisted ? 'currentColor' : 'none'} />
-            </button>
-          </div>
+          {product.totalStock === 0 ? (
+            <div className="mb-8">
+              <NotifyMeButton 
+                onClick={() => setShowNotifyModal(true)} 
+                isSubscribed={isSubscribed}
+              />
+            </div>
+          ) : (
+            <div className="flex gap-3 mb-8">
+              <button onClick={handleBuyNow} className="btn-primary flex-1 flex items-center justify-center gap-2">
+                <FiZap size={18} />
+                Buy Now
+              </button>
+              <button
+                onClick={handleAddToCart}
+                className="flex items-center justify-center gap-1.5 px-4 py-2 border border-zinc-300 hover:border-zinc-900 text-sm transition-colors"
+                aria-label="Add to cart"
+              >
+                <FiShoppingBag size={16} />
+                Cart
+              </button>
+              <button
+                onClick={handleWishlist}
+                className={`p-3 border transition-colors ${isWishlisted ? 'bg-red-50 border-red-300 text-red-500' : 'border-zinc-300 hover:border-zinc-900'}`}
+                aria-label="Wishlist"
+              >
+                <FiHeart size={20} fill={isWishlisted ? 'currentColor' : 'none'} />
+              </button>
+            </div>
+          )}
 
           {/* Tags */}
           {product.tags?.length > 0 && (
@@ -286,6 +329,22 @@ export default function ProductDetailPage() {
         </div>
       </div>
       </div>
+
+      {/* Size Guide Modal */}
+      <SizeGuideModal
+        isOpen={showSizeGuide}
+        onClose={() => setShowSizeGuide(false)}
+        sizeGuide={product.sizeGuide}
+        category={product.category}
+      />
+
+      {/* Stock Notification Modal */}
+      <StockNotificationModal
+        isOpen={showNotifyModal}
+        onClose={() => setShowNotifyModal(false)}
+        productId={product._id}
+        onSubscribed={handleSubscribed}
+      />
     </>
   );
 }
