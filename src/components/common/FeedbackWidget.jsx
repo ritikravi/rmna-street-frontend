@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { FiMessageSquare, FiX, FiStar, FiSend } from 'react-icons/fi';
 import api from '../../utils/api';
 import toast from 'react-hot-toast';
-import { useSelector } from 'react-redux';
+import { selectComparisonCount } from '../../store/slices/comparisonSlice';
 
 const TYPES = [
   { value: 'suggestion', label: '💡 Suggestion' },
@@ -13,6 +14,7 @@ const TYPES = [
 
 export default function FeedbackWidget() {
   const { user } = useSelector((s) => s.auth);
+  const comparisonCount = useSelector(selectComparisonCount);
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -49,12 +51,15 @@ export default function FeedbackWidget() {
     setTimeout(() => { setSubmitted(false); setForm({ name: '', email: '', type: 'suggestion', message: '' }); setRating(0); }, 300);
   };
 
+  // Adjust bottom position when comparison bar is visible
+  const bottomClass = comparisonCount > 0 ? 'bottom-20 sm:bottom-24' : 'bottom-6';
+
   return (
     <>
       {/* Floating button */}
       <button
         onClick={handleOpen}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 bg-zinc-900 text-white px-4 py-3 shadow-lg hover:bg-zinc-700 transition-colors text-sm font-medium"
+        className={`fixed right-4 sm:right-6 z-40 flex items-center gap-2 bg-zinc-900 text-white px-3 sm:px-4 py-2.5 sm:py-3 shadow-lg hover:bg-zinc-700 transition-all text-sm font-medium ${bottomClass}`}
         style={{ borderRadius: 2 }}
         aria-label="Give feedback"
       >

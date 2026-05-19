@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { FaWhatsapp, FaTimes } from 'react-icons/fa';
+import { selectComparisonCount } from '../../store/slices/comparisonSlice';
 
 const WhatsAppButton = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const comparisonCount = useSelector(selectComparisonCount);
   
   // WhatsApp number (replace with your actual number)
   const phoneNumber = '919117328809'; // Format: country code + number (no + or spaces)
@@ -10,10 +13,13 @@ const WhatsAppButton = () => {
   
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
+  // Adjust bottom position when comparison bar is visible
+  const bottomClass = comparisonCount > 0 ? 'bottom-20 sm:bottom-24' : 'bottom-6';
+
   return (
     <>
       {/* Floating WhatsApp Button */}
-      <div className="fixed bottom-6 left-6 z-50">
+      <div className={`fixed left-4 sm:left-6 z-50 transition-all duration-300 ${bottomClass}`}>
         {isOpen && (
           <div className="mb-4 bg-white rounded-lg shadow-2xl p-4 w-64 animate-fade-in">
             <div className="flex items-center justify-between mb-3">
@@ -49,13 +55,13 @@ const WhatsAppButton = () => {
         
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95"
+          className="bg-green-500 hover:bg-green-600 text-white w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95"
           aria-label="WhatsApp Support"
         >
           {isOpen ? (
-            <FaTimes className="text-2xl" />
+            <FaTimes className="text-xl sm:text-2xl" />
           ) : (
-            <FaWhatsapp className="text-3xl" />
+            <FaWhatsapp className="text-2xl sm:text-3xl" />
           )}
         </button>
       </div>
