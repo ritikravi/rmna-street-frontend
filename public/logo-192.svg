@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" fill="none">
+  <!-- Small square logo for app icon - Dark background -->
+  <rect width="192" height="192" fill="#000000"/>
+  
+  <!-- RMNA Logo centered (simplified for small size) -->
+  <g transform="translate(21, 60)">
+    <!-- R -->
+    <path d="M0 8 L0 52 L11 52 L11 33 L22 33 L22 20 L11 20 L11 8 Z M11 8 L26 8 C32 8 35 13 35 20 C35 27 32 33 26 33 L22 33" fill="#FFFFFF"/>
+    <!-- Red slash through R -->
+    <line x1="26" y1="33" x2="11" y2="52" stroke="#BB0000" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- M -->
+    <path d="M43 8 L43 52 L54 52 L54 26 L67 52 L80 26 L80 52 L91 52 L91 8 L80 8 L67 35 L54 8 Z" fill="#FFFFFF"/>
+
+    <!-- N -->
+    <path d="M99 8 L99 52 L110 52 L110 26 L130 52 L141 52 L141 8 L130 8 L130 35 L110 8 Z" fill="#FFFFFF"/>
+
+    <!-- A -->
+    <path d="M149 52 L158 8 L167 8 L158 52 Z M149 8 L140 52 L149 52 Z" fill="#FFFFFF"/>
+    <!-- Red slash through A -->
+    <line x1="167" y1="8" x2="149" y2="52" stroke="#BB0000" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Square logo for app icon - Dark background -->
+  <rect width="512" height="512" fill="#000000"/>
+  
+  <!-- RMNA Logo centered -->
+  <g transform="translate(56, 140)">
+    <!-- R -->
+    <path d="M0 20 L0 140 L30 140 L30 90 L60 90 L60 55 L30 55 L30 20 Z M30 20 L70 20 C85 20 95 35 95 55 C95 75 85 90 70 90 L60 90" fill="#FFFFFF"/>
+    <!-- Red slash through R -->
+    <line x1="70" y1="90" x2="30" y2="140" stroke="#BB0000" stroke-width="10" stroke-linecap="round"/>
+
+    <!-- M -->
+    <path d="M115 20 L115 140 L145 140 L145 70 L180 140 L215 70 L215 140 L245 140 L245 20 L215 20 L180 95 L145 20 Z" fill="#FFFFFF"/>
+
+    <!-- N -->
+    <path d="M265 20 L265 140 L295 140 L295 70 L350 140 L380 140 L380 20 L350 20 L350 95 L295 20 Z" fill="#FFFFFF"/>
+
+    <!-- A -->
+    <path d="M400 140 L425 20 L450 20 L425 140 Z M400 20 L375 140 L400 140 Z" fill="#FFFFFF"/>
+    <!-- Red slash through A -->
+    <line x1="450" y1="20" x2="400" y2="140" stroke="#BB0000" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  
+  <!-- BUILT DIFFERENT tagline -->
+  <g transform="translate(256, 340)">
+    <line x1="-80" y1="0" x2="-50" y2="0" stroke="#BB0000" stroke-width="2"/>
+    <text x="0" y="4" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="600" letter-spacing="6" text-anchor="middle">BUILT DIFFERENT</text>
+    <line x1="50" y1="0" x2="80" y2="0" stroke="#BB0000" stroke-width="2"/>
+  </g>
+</svg>
