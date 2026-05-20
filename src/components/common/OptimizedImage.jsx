@@ -25,13 +25,24 @@ export default function OptimizedImage({
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
-  // Generate optimized URL
-  const optimizedSrc = getOptimizedImageUrl(src, {
-    width: width || 'auto',
-    height: height || 'auto',
-    quality: 'auto:good',
-    format: 'auto', // Cloudinary auto-selects WebP for supported browsers
-  });
+  // Don't optimize if no src or not Cloudinary
+  if (!src) {
+    return (
+      <div className={`bg-zinc-100 flex items-center justify-center ${className}`}>
+        <span className="text-zinc-400 text-xs">No image</span>
+      </div>
+    );
+  }
+
+  // Generate optimized URL only for Cloudinary images
+  const optimizedSrc = src.includes('cloudinary.com')
+    ? getOptimizedImageUrl(src, {
+        width: width || 'auto',
+        height: height || 'auto',
+        quality: 'auto:good',
+        format: 'auto',
+      })
+    : src;
 
   // Generate srcset for responsive images
   const srcSet = responsive && src?.includes('cloudinary.com')
@@ -58,10 +69,10 @@ export default function OptimizedImage({
   }
 
   return (
-    <div className={`relative ${className}`}>
+    <>
       {/* Blur placeholder while loading */}
       {!isLoaded && (
-        <div className="absolute inset-0 bg-zinc-100 animate-pulse" />
+        <div className="absolute inset-0 bg-zinc-100 animate-pulse z-10" />
       )}
       
       <img
@@ -72,9 +83,9 @@ export default function OptimizedImage({
         loading={loading}
         onLoad={handleLoad}
         onError={handleError}
-        className={`${className} ${!isLoaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
+        className={className}
         {...props}
       />
-    </div>
+    </>
   );
 }
