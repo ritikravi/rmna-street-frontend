@@ -6,7 +6,11 @@ import { Toaster } from 'react-hot-toast';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import App from './App';
 import { store } from './store';
+import { registerServiceWorker } from './utils/registerSW';
 import './index.css';
+
+// Register service worker for caching and offline support
+registerServiceWorker();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

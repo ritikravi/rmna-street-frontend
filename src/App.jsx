@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import Layout from './components/layout/Layout';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import AdminRoute from './components/common/AdminRoute';
@@ -7,36 +8,43 @@ import WhatsAppButton from './components/common/WhatsAppButton';
 import ComparisonBar from './components/product/ComparisonBar';
 import ComparisonView from './components/product/ComparisonView';
 
-// ── Customer pages ──────────────────────────────────────────
-import HomePage from './pages/HomePage';
-import ProductsPage from './pages/ProductsPage';
-import ProductDetailPage from './pages/ProductDetailPage';
-import CartPage from './pages/CartPage';
-import CheckoutPage from './pages/CheckoutPage';
-import OrderSuccessPage from './pages/OrderSuccessPage';
-import OrdersPage from './pages/OrdersPage';
-import OrderDetailPage from './pages/OrderDetailPage';
-import WishlistPage from './pages/WishlistPage';
-import ProfilePage from './pages/ProfilePage';
-import WomenAccessoriesPage from './pages/WomenAccessoriesPage';
-import GirlsJeansPage from './pages/GirlsJeansPage';
-import GirlsKurtiPage from './pages/GirlsKurtiPage';
-import MensShirtsPage from './pages/MensShirtsPage';
-import FeedbackPage from './pages/FeedbackPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+// Loading component
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-zinc-900"></div>
+  </div>
+);
+
+// ── Lazy load pages for code splitting ──────────────────────
+const HomePage = lazy(() => import('./pages/HomePage'));
+const ProductsPage = lazy(() => import('./pages/ProductsPage'));
+const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage'));
+const CartPage = lazy(() => import('./pages/CartPage'));
+const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
+const OrderSuccessPage = lazy(() => import('./pages/OrderSuccessPage'));
+const OrdersPage = lazy(() => import('./pages/OrdersPage'));
+const OrderDetailPage = lazy(() => import('./pages/OrderDetailPage'));
+const WishlistPage = lazy(() => import('./pages/WishlistPage'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage'));
+const WomenAccessoriesPage = lazy(() => import('./pages/WomenAccessoriesPage'));
+const GirlsJeansPage = lazy(() => import('./pages/GirlsJeansPage'));
+const GirlsKurtiPage = lazy(() => import('./pages/GirlsKurtiPage'));
+const MensShirtsPage = lazy(() => import('./pages/MensShirtsPage'));
+const FeedbackPage = lazy(() => import('./pages/FeedbackPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage'));
 
 // ── Admin pages ──────────────────────────────────────────────
-import AdminLoginPage from './pages/admin/AdminLoginPage';
-import AdminLayout from './pages/admin/AdminLayout';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import AdminProducts from './pages/admin/AdminProducts';
-import AdminWomenProducts from './pages/admin/AdminWomenProducts';
-import AdminProductForm from './pages/admin/AdminProductForm';
-import AdminOrders from './pages/admin/AdminOrders';
-import AdminUsers from './pages/admin/AdminUsers';
-import AdminCoupons from './pages/admin/AdminCoupons';
-import AdminFeedback from './pages/admin/AdminFeedback';
+const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'));
+const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'));
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
+const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
+const AdminWomenProducts = lazy(() => import('./pages/admin/AdminWomenProducts'));
+const AdminProductForm = lazy(() => import('./pages/admin/AdminProductForm'));
+const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
+const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'));
+const AdminCoupons = lazy(() => import('./pages/admin/AdminCoupons'));
+const AdminFeedback = lazy(() => import('./pages/admin/AdminFeedback'));
 
 export default function App() {
   return (
@@ -45,7 +53,8 @@ export default function App() {
       <WhatsAppButton />
       <ComparisonBar />
       <ComparisonView />
-      <Routes>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
       {/* ── Admin world (completely separate) ── */}
       <Route path="/admin/login" element={<AdminLoginPage />} />
       <Route element={<AdminRoute />}>
@@ -87,6 +96,7 @@ export default function App() {
         </Route>
       </Route>
     </Routes>
+      </Suspense>
     </>
   );
 }

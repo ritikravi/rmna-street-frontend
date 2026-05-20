@@ -4,6 +4,7 @@ import { FiHeart } from 'react-icons/fi';
 import { toggleWishlist } from '../../store/slices/wishlistSlice';
 import { formatPrice, getDiscount } from '../../utils/helpers';
 import CompareButton from './CompareButton';
+import OptimizedImage from '../common/OptimizedImage';
 import toast from 'react-hot-toast';
 
 export default function ProductCard({ product }) {
@@ -27,11 +28,14 @@ export default function ProductCard({ product }) {
     <Link to={`/products/${product._id}`} className="group block">
       {/* Image Container with Premium Hover Effect */}
       <div className="relative overflow-hidden bg-zinc-50 aspect-[3/4] mb-4">
-        <img
+        <OptimizedImage
           src={product.images[0]?.url || 'https://placehold.co/400x533?text=RMNA'}
           alt={product.name}
+          width={400}
+          height={533}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
           loading="lazy"
+          responsive
         />
         
         {/* Gradient Overlay on Hover */}
