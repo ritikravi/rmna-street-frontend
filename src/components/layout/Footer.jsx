@@ -10,7 +10,7 @@ export default function Footer() {
           <Logo variant="light" size="md" showTagline className="mb-4" />
           <p className="text-sm leading-relaxed">Premium men's streetwear. Crafted for the streets, built to last.</p>
           <div className="flex gap-4 mt-4">
-            <a href="#" className="hover:text-white transition-colors"><FiInstagram size={18} /></a>
+            <a href="https://www.instagram.com/rmnastreet/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" aria-label="Follow us on Instagram"><FiInstagram size={18} /></a>
             <a href="#" className="hover:text-white transition-colors"><FiTwitter size={18} /></a>
             <a href="#" className="hover:text-white transition-colors"><FiFacebook size={18} /></a>
           </div>
