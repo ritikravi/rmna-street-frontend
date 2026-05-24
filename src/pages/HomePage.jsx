@@ -39,7 +39,7 @@ export default function HomePage() {
       <section className="relative h-[85vh] bg-zinc-900 flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 to-black/30 z-10" />
         <img
-          src="https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=1600&q=80"
+          src="https://images.unsplash.com/photo-1542272604-787c3835535d?w=1600&q=80"
           alt="RMNA Street Hero"
           className="absolute inset-0 w-full h-full object-cover"
         />
