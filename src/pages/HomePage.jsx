@@ -50,7 +50,7 @@ export default function HomePage() {
             <span style={{ color: '#BB0000' }}>Redefined.</span>
           </h2>
           <p className="text-zinc-300 text-lg mb-8 max-w-md">
-            Premium men's jeans, girls' fashion, and women's accessories crafted for the streets.
+            Premium streetwear for everyone. Men's jeans & shirts, girls' fashion, and women's accessories.
           </p>
           <p className="text-zinc-300 text-lg mb-8 max-w-md">
             Find your perfect fit.
