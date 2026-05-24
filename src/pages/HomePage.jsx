@@ -50,7 +50,7 @@ export default function HomePage() {
             <span style={{ color: '#BB0000' }}>Redefined.</span>
           </h2>
           <p className="text-zinc-300 text-lg mb-8 max-w-md">
-            Premium men's jeans crafted for the streets. Find your perfect fit.
+            Premium men's jeans, girls' fashion, and women's accessories crafted for the streets. Find your perfect fit.
           </p>
           <div className="flex gap-4">
             <Link to="/products" className="btn-primary bg-white text-black hover:bg-zinc-100">
