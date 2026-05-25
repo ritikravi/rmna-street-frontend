@@ -55,11 +55,11 @@ export default function HomePage() {
           <p className="text-zinc-300 text-lg mb-8 max-w-md">
             Find your perfect fit.
           </p>
-          <div className="flex gap-4">
-            <Link to="/products" className="btn-primary bg-white text-black hover:bg-zinc-100">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link to="/products" className="btn-primary bg-white text-black hover:bg-zinc-100 text-center px-8 py-4 text-lg font-semibold">
               Shop Now
             </Link>
-            <Link to="/products?featured=true" className="btn-outline border-white text-white hover:bg-white hover:text-black">
+            <Link to="/products?featured=true" className="btn-outline border-2 border-white text-white hover:bg-white hover:text-black text-center px-8 py-4 text-lg font-semibold">
               Featured
             </Link>
           </div>
@@ -173,6 +173,48 @@ export default function HomePage() {
               <div className="text-3xl mb-2">{item.icon}</div>
               <h3 className="font-semibold text-sm tracking-wider uppercase">{item.title}</h3>
               <p className="text-zinc-400 text-xs mt-1">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="bg-zinc-100 py-16">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-3xl font-bold mb-3">Stay Updated</h2>
+          <p className="text-zinc-600 mb-6">Get exclusive deals, new arrivals, and style tips delivered to your inbox.</p>
+          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="flex-1 px-4 py-3 border border-zinc-300 focus:outline-none focus:border-zinc-900"
+              required
+            />
+            <button type="submit" className="bg-zinc-900 text-white px-8 py-3 font-semibold hover:bg-zinc-700 transition-colors whitespace-nowrap">
+              Subscribe
+            </button>
+          </form>
+          <p className="text-xs text-zinc-500 mt-3">We respect your privacy. Unsubscribe anytime.</p>
+        </div>
+      </section>
+
+      {/* Social Proof */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+        <h2 className="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { name: 'Rahul S.', rating: 5, text: 'Best quality jeans I\'ve ever bought! Perfect fit and amazing fabric.' },
+            { name: 'Priya M.', rating: 5, text: 'Love the kurti collection! Fast delivery and great customer service.' },
+            { name: 'Ankit K.', rating: 5, text: 'The accessories are stunning! My wife absolutely loves them.' },
+          ].map((review, i) => (
+            <div key={i} className="bg-white p-6 rounded-lg shadow-md border border-zinc-200">
+              <div className="flex gap-1 mb-3">
+                {[...Array(review.rating)].map((_, j) => (
+                  <span key={j} className="text-yellow-400">★</span>
+                ))}
+              </div>
+              <p className="text-zinc-700 mb-4 italic">"{review.text}"</p>
+              <p className="font-semibold text-sm">— {review.name}</p>
             </div>
           ))}
         </div>
