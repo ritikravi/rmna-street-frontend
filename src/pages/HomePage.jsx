@@ -18,6 +18,7 @@ export default function HomePage() {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterLoading, setNewsletterLoading] = useState(false);
   const [newsletterMessage, setNewsletterMessage] = useState('');
+  const [banner, setBanner] = useState(null);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -33,7 +34,18 @@ export default function HomePage() {
       setCategoryProducts(results);
       setLoading(false);
     };
+    
+    const fetchBanner = async () => {
+      try {
+        const res = await api.get('/banners/active');
+        setBanner(res.data.banner);
+      } catch (error) {
+        console.error('Failed to fetch banner');
+      }
+    };
+    
     fetchAll();
+    fetchBanner();
   }, []);
 
   const handleNewsletterSubmit = async (e) => {
@@ -86,17 +98,21 @@ export default function HomePage() {
       </section>
 
       {/* Discount Banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-10">
-        <div className="bg-gradient-to-r from-zinc-900 to-zinc-700 rounded-xl px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>
-            <p className="text-white text-2xl md:text-3xl font-bold">Upto <span className="text-red-400">50% OFF</span> on selected styles</p>
-            <p className="text-zinc-400 text-sm mt-1">Limited time offer · Free shipping on all orders</p>
+      {banner && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-10">
+          <div className={`bg-gradient-to-r ${banner.backgroundColor} rounded-xl px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4`}>
+            <div>
+              <p className={`${banner.textColor} text-2xl md:text-3xl font-bold`} dangerouslySetInnerHTML={{ __html: banner.title }} />
+              {banner.subtitle && (
+                <p className="text-zinc-400 text-sm mt-1">{banner.subtitle}</p>
+              )}
+            </div>
+            <Link to={banner.buttonLink} className="bg-white text-zinc-900 font-semibold px-6 py-3 text-sm tracking-wider uppercase hover:bg-zinc-100 transition-colors whitespace-nowrap">
+              {banner.buttonText}
+            </Link>
           </div>
-          <Link to="/products?discounted=true" className="bg-white text-zinc-900 font-semibold px-6 py-3 text-sm tracking-wider uppercase hover:bg-zinc-100 transition-colors whitespace-nowrap">
-            Shop Now
-          </Link>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Shop by Category — circular icons like Meesho */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">

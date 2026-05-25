@@ -47,6 +47,7 @@ const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'));
 const AdminCoupons = lazy(() => import('./pages/admin/AdminCoupons'));
 const AdminFeedback = lazy(() => import('./pages/admin/AdminFeedback'));
 const AdminNewsletter = lazy(() => import('./pages/admin/AdminNewsletter'));
+const AdminBanners = lazy(() => import('./pages/admin/AdminBanners'));
 
 export default function App() {
   return (
@@ -71,6 +72,7 @@ export default function App() {
           <Route path="coupons" element={<AdminCoupons />} />
           <Route path="feedback" element={<AdminFeedback />} />
           <Route path="newsletter" element={<AdminNewsletter />} />
+          <Route path="banners" element={<AdminBanners />} />
         </Route>
       </Route>
 
