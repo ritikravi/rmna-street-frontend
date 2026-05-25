@@ -15,6 +15,9 @@ const CATEGORY_SECTIONS = [
 export default function HomePage() {
   const [categoryProducts, setCategoryProducts] = useState({});
   const [loading, setLoading] = useState(true);
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterLoading, setNewsletterLoading] = useState(false);
+  const [newsletterMessage, setNewsletterMessage] = useState('');
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -32,6 +35,22 @@ export default function HomePage() {
     };
     fetchAll();
   }, []);
+
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+    setNewsletterLoading(true);
+    setNewsletterMessage('');
+
+    try {
+      const res = await api.post('/newsletter/subscribe', { email: newsletterEmail });
+      setNewsletterMessage(res.data.message);
+      setNewsletterEmail('');
+    } catch (error) {
+      setNewsletterMessage(error.response?.data?.message || 'Failed to subscribe. Please try again.');
+    } finally {
+      setNewsletterLoading(false);
+    }
+  };
 
   return (
     <div>
@@ -183,17 +202,29 @@ export default function HomePage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-3xl font-bold mb-3">Stay Updated</h2>
           <p className="text-zinc-600 mb-6">Get exclusive deals, new arrivals, and style tips delivered to your inbox.</p>
-          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <input
               type="email"
               placeholder="Enter your email"
+              value={newsletterEmail}
+              onChange={(e) => setNewsletterEmail(e.target.value)}
               className="flex-1 px-4 py-3 border border-zinc-300 focus:outline-none focus:border-zinc-900"
               required
+              disabled={newsletterLoading}
             />
-            <button type="submit" className="bg-zinc-900 text-white px-8 py-3 font-semibold hover:bg-zinc-700 transition-colors whitespace-nowrap">
-              Subscribe
+            <button 
+              type="submit" 
+              disabled={newsletterLoading}
+              className="bg-zinc-900 text-white px-8 py-3 font-semibold hover:bg-zinc-700 transition-colors whitespace-nowrap disabled:bg-zinc-400"
+            >
+              {newsletterLoading ? 'Subscribing...' : 'Subscribe'}
             </button>
           </form>
+          {newsletterMessage && (
+            <p className={`text-sm mt-3 ${newsletterMessage.includes('success') || newsletterMessage.includes('Successfully') ? 'text-green-600' : 'text-red-600'}`}>
+              {newsletterMessage}
+            </p>
+          )}
           <p className="text-xs text-zinc-500 mt-3">We respect your privacy. Unsubscribe anytime.</p>
         </div>
       </section>
