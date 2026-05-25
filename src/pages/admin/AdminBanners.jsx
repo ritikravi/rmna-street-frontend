@@ -14,7 +14,10 @@ export default function AdminBanners() {
     buttonText: 'Shop Now',
     buttonLink: '/products',
     backgroundColor: 'from-zinc-900 to-zinc-700',
-    isActive: true
+    isActive: true,
+    minDiscount: 0,
+    targetCategories: [],
+    targetGender: 'all'
   });
 
   useEffect(() => {
@@ -57,7 +60,10 @@ export default function AdminBanners() {
       buttonText: banner.buttonText,
       buttonLink: banner.buttonLink,
       backgroundColor: banner.backgroundColor,
-      isActive: banner.isActive
+      isActive: banner.isActive,
+      minDiscount: banner.minDiscount || 0,
+      targetCategories: banner.targetCategories || [],
+      targetGender: banner.targetGender || 'all'
     });
     setShowForm(true);
   };
@@ -90,7 +96,10 @@ export default function AdminBanners() {
       buttonText: 'Shop Now',
       buttonLink: '/products',
       backgroundColor: 'from-zinc-900 to-zinc-700',
-      isActive: true
+      isActive: true,
+      minDiscount: 0,
+      targetCategories: [],
+      targetGender: 'all'
     });
     setEditingBanner(null);
     setShowForm(false);
@@ -186,6 +195,55 @@ export default function AdminBanners() {
                   <option value="from-purple-600 to-purple-800">Purple</option>
                   <option value="from-orange-600 to-orange-800">Orange</option>
                 </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Minimum Discount % (0 = all products)</label>
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={formData.minDiscount}
+                  onChange={(e) => setFormData({ ...formData, minDiscount: parseInt(e.target.value) || 0 })}
+                  className="w-full px-3 py-2 border border-zinc-300 focus:outline-none focus:border-zinc-900"
+                  placeholder="50"
+                />
+                <p className="text-xs text-zinc-500 mt-1">Show products with this discount or more</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Target Gender</label>
+                <select
+                  value={formData.targetGender}
+                  onChange={(e) => setFormData({ ...formData, targetGender: e.target.value })}
+                  className="w-full px-3 py-2 border border-zinc-300 focus:outline-none focus:border-zinc-900"
+                >
+                  <option value="all">All Genders</option>
+                  <option value="men">Men</option>
+                  <option value="women">Women</option>
+                  <option value="girls">Girls</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Target Categories (optional)</label>
+                <div className="space-y-2">
+                  {['jeans', 'shirts', 'kurti', 'accessories'].map((cat) => (
+                    <label key={cat} className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={formData.targetCategories.includes(cat)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setFormData({ ...formData, targetCategories: [...formData.targetCategories, cat] });
+                          } else {
+                            setFormData({ ...formData, targetCategories: formData.targetCategories.filter(c => c !== cat) });
+                          }
+                        }}
+                        className="rounded border-zinc-300"
+                      />
+                      <span className="text-sm capitalize">{cat}</span>
+                    </label>
+                  ))}
+                </div>
+                <p className="text-xs text-zinc-500 mt-1">Leave empty for all categories</p>
               </div>
             </div>
             <div className="flex gap-3">

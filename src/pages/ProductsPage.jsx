@@ -24,6 +24,9 @@ export default function ProductsPage() {
     sort: searchParams.get('sort') || 'newest',
     color: searchParams.get('color') || '',
     brands: searchParams.get('brand') ? searchParams.get('brand').split(',') : [],
+    minDiscount: searchParams.get('minDiscount') || '',
+    categories: searchParams.get('categories') ? searchParams.get('categories').split(',') : [],
+    gender: searchParams.get('gender') || '',
   });
 
   // Sync URL params to filters when navigating from navbar links
@@ -38,6 +41,9 @@ export default function ProductsPage() {
       sort: searchParams.get('sort') || 'newest',
       color: searchParams.get('color') || '',
       brands: searchParams.get('brand') ? searchParams.get('brand').split(',') : [],
+      minDiscount: searchParams.get('minDiscount') || '',
+      categories: searchParams.get('categories') ? searchParams.get('categories').split(',') : [],
+      gender: searchParams.get('gender') || '',
     });
     reset();
   }, [searchParams.toString()]);

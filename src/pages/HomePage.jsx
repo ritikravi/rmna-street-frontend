@@ -48,6 +48,13 @@ export default function HomePage() {
     fetchBanner();
   }, []);
 
+  const getSmartButtonLink = (banner) => {
+    if (!banner) return '/products';
+    
+    // Use backend-generated smart link if available
+    return banner.smartLink || banner.buttonLink || '/products';
+  };
+
   const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
     setNewsletterLoading(true);
@@ -107,7 +114,7 @@ export default function HomePage() {
                 <p className="text-zinc-400 text-sm mt-1">{banner.subtitle}</p>
               )}
             </div>
-            <Link to={banner.buttonLink} className="bg-white text-zinc-900 font-semibold px-6 py-3 text-sm tracking-wider uppercase hover:bg-zinc-100 transition-colors whitespace-nowrap">
+            <Link to={getSmartButtonLink(banner)} className="bg-white text-zinc-900 font-semibold px-6 py-3 text-sm tracking-wider uppercase hover:bg-zinc-100 transition-colors whitespace-nowrap">
               {banner.buttonText}
             </Link>
           </div>
