@@ -33,6 +33,7 @@ const MensShirtsPage = lazy(() => import('./pages/MensShirtsPage'));
 const FeedbackPage = lazy(() => import('./pages/FeedbackPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage'));
+const UnsubscribePage = lazy(() => import('./pages/UnsubscribePage'));
 
 // ── Admin pages ──────────────────────────────────────────────
 const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'));
@@ -76,6 +77,7 @@ export default function App() {
       {/* ── Customer world ── */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/unsubscribe" element={<UnsubscribePage />} />
 
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />

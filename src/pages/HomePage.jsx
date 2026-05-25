@@ -225,7 +225,13 @@ export default function HomePage() {
               {newsletterMessage}
             </p>
           )}
-          <p className="text-xs text-zinc-500 mt-3">We respect your privacy. Unsubscribe anytime.</p>
+          <p className="text-xs text-zinc-500 mt-3">
+            We respect your privacy.{' '}
+            <Link to="/unsubscribe" className="underline hover:text-zinc-700">
+              Unsubscribe anytime
+            </Link>
+            .
+          </p>
         </div>
       </section>
 
